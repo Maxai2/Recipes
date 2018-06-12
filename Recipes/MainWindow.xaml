@@ -37,7 +37,7 @@
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition/>
 					<ColumnDefinition/>
-				</Grid.ColumnDefinitions>
+				</Grid.ColumnDefinitions> 
 
 				<StackPanel Grid.Column="0" Margin="10">
 					<Label Content="Описание:" FontSize="15"/>
@@ -53,7 +53,7 @@
 					<Label Content="Ингридиенты:" FontSize="15"/>
 
 					<Border BorderThickness="2" BorderBrush="LightGray">
-						<TextBlock Margin="5" TextWrapping="Wrap"/>
+						<ListBox Margin="5" />
 
 					</Border>
 
