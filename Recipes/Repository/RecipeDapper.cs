@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace Recipes.Repository
 {
-    public class RecipeDupper
+    public class RecipeDapper
     {
         private IDbConnection connection = null;
         private IDbConnection Connection

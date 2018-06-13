@@ -87,7 +87,7 @@
     <Compile Include="Model\ReceipeIngridient.cs" />
     <Compile Include="Model\Unit.cs" />
     <Compile Include="Repository\RecIngDapper.cs" />
-    <Compile Include="Repository\RecipeDupper.cs" />
+    <Compile Include="Repository\RecipeDapper.cs" />
     <Compile Include="ViewModel\AddWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\AddWindow.xaml.cs">

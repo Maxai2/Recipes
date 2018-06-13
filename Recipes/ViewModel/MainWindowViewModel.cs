@@ -10,30 +10,12 @@ namespace Recipes.ViewModel
 {
     public class MainWindowViewModel : IMainWindowViewModel
     {
-        RecipeDupper recDup = new RecipeDupper();
+        RecipeDapper recDup = new RecipeDapper();
         RecIngDapper recIngDap = new RecIngDapper();
 
         public ObservableCollection<Receipe> ReceipeList { get; set; }
         public ObservableCollection<ReceipeIngridient> ReceipeIngridientList { get; set; }
         public ObservableCollection<ReceipeIngridient> ReceipeIngridientListAll { get; set; }
-
-        private Receipe selectedReceipe;
-        public Receipe SelectedReceipe
-        {
-            get => selectedReceipe;
-            set
-            {
-                ReceipeIngridientList.Clear();
-
-                foreach (var item in ReceipeIngridientListAll)
-                {
-                    if (selectedReceipe.Id == item.Receipe.Id)
-                    {
-                        ReceipeIngridientList.Add(item);
-                    }
-                }
-            }
-        }
 
         public MainWindowViewModel(IMainWindow view)
         {
@@ -57,6 +39,27 @@ namespace Recipes.ViewModel
             }
         }
 
+        private Receipe selectedReceipe;
+        public Receipe SelectedReceipe
+        {
+            get => selectedReceipe;
+            set
+            {
+                selectedReceipe = value;
+
+                ReceipeIngridientList.Clear();
+                
+                foreach (var item in ReceipeIngridientListAll)
+                {
+                    if (selectedReceipe.Id == item.Receipe)
+                    {
+                        ReceipeIngridientList.Add(item);
+                    }
+                }
+            }
+        }
+
+
         public ICommand addReceipe;
         public ICommand AddReceipe
         {
@@ -76,17 +79,10 @@ namespace Recipes.ViewModel
             }
         }
 
-
-
-
-
-
         public ICommand RemoveReceipe => throw new System.NotImplementedException();
 
         public ICommand EditReceipe => throw new System.NotImplementedException();
 
-
         public IMainWindow View { get; private set; }
-
     }
 }
