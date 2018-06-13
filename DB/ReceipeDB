@@ -1,0 +1,72 @@
+CREATE DATABASE ReceipesDB;
+GO
+
+USE ReceipesDB;
+GO
+
+CREATE TABLE Receipes (
+	Id int PRIMARY KEY IDENTITY(1, 1),
+	Title nvarchar(250) NOT NULL,
+	PrepareTime time NOT NULL,
+	Descrip ntext NOT NULL,
+	Note ntext NULL
+);
+
+CREATE TABLE Units (
+	Id int PRIMARY KEY IDENTITY(1, 1),
+	Unit nvarchar(10) NOT NULL
+);
+
+CREATE TABLE Ingredients (
+	Id int PRIMARY KEY IDENTITY(1, 1),
+	Ingredient nvarchar(250) NOT NULL,
+	UnitId int FOREIGN KEY (UnitId) REFERENCES Units(Id),
+);
+
+CREATE TABLE ReceipesIngredients (
+	ReceipeId int FOREIGN KEY (ReceipeId) REFERENCES Receipes(Id),
+	IngredientId int FOREIGN KEY (IngredientId) REFERENCES Ingredients(Id),
+	Quantity float NOT NULL
+);
+GO
+
+
+INSERT INTO Units(Unit)
+VALUES (N'шт'), (N'гр'), (N'кг'), (N'л'), (N'мл'), (N'ч.л.'), (N'ст.л.'), (N'ст'), (N'по вкусу');
+GO
+
+INSERT INTO Ingredients(Ingredient, UnitId)
+VALUES (N'оливковое масло', 7),
+(N'лук репчатый среднего размера', 1),
+(N'черный перец', 9),
+(N'соль', 9),
+(N'масла сливочное', 7),
+(N'яйцо', 1),
+(N'помидоры', 1),
+
+(N'кабачок', 1),
+(N'сыр', 2),
+(N'брынза', 2),
+(N'черри', 1);
+GO
+
+INSERT INTO Receipes(Title, PrepareTime, Descrip, Note)
+VALUES (N'Омлет с помидорами', N'12:00:00', 
+N'Взбейте яйца миксером. Сначала на маленькой скорости, потом — на максимальной.\n
+Добавьте молоко, соль, специи. Еще раз хорошо взбейте.\n
+Разогрейте хорошо сковороду. Смажьте растительным маслом.\n
+Влейте взбитую яичную массу. Готовьте на среднем огне 2-3 минуты.\n
+Готовое блюдо подавайте с измельченной зеленью.', 
+N'Омлет с помидорами, деревенский омлет с сыром и кабачком и полезный диетический омлет'),
+(N'Деревенский омлет с сыром и кабачком', N'14:00:00', 
+N'1. Кабачок натереть на крупной терке.\n
+2. Весь сыр и брынзу натереть на крупной терке.\n
+3. Петрушку крупно нарезать.\n
+4. Кабачок соединить с яйцами, петрушкой и сыром (1 ст.ложку сыра оставить). Посолить, поперчить, взбить.\n
+5. Разогреть в сковороде масло и выложить яичную массу.\n
+6. Готовить до полуготовности. Помидоры разрезать на 2 или 4 части (в зависимости от размера) и выложить на омлет.\n
+7. Посыпать оставшимся сыром, накрыть крышкой и готовить ещё минуты 3.', NULL);
+
+INSERT INTO ReceipesIngredients(ReceipeId, IngredientId, Quantity)
+VALUES (1, 1, 1), (1, 2, 1), (1, 3, 0), (1, 4, 0), (1, 5, 1), (1, 6, 6), 
+(2, 7, 1), (2, 8, 70), (2, 9, 100), (2, 10, 4)
