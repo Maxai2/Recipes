@@ -1,0 +1,129 @@
+﻿<Window x:Class="Recipes.View.AddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Recipes.View"
+        mc:Ignorable="d"
+        Title="AddWindow" Height="600" Width="400" WindowStartupLocation="CenterOwner">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="1.5*"/>
+			<RowDefinition Height="0.3*"/>
+		</Grid.RowDefinitions>
+
+		<Grid Grid.Row="0" Margin="5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<Label Grid.Column="0" Content="Название:" FontSize="16" VerticalAlignment="Center"/>
+			<TextBox Grid.Column="1" VerticalAlignment="Center"/>
+		</Grid>
+
+		<GroupBox Grid.Row="1" Margin="5" Header="Рецепт" FontSize="17">
+			<TextBox TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto"/>
+		</GroupBox>
+
+		<GroupBox Grid.Row="2" Margin="5" Header="Ингридиенты" FontSize="17">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+
+				<ListBox Grid.Row="0" Margin="5" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+				</ListBox>
+
+				<Border Grid.Row="1" Margin="5" BorderThickness="2" BorderBrush="LightGray">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="*"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="0.05*"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+
+						<RadioButton Name="ExcistI" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="True" GroupName="Mode"/>
+
+						<Grid Grid.Row="0" Grid.Column="1" Margin="0 5">
+
+							<Grid.Style>
+								<Style TargetType="Grid">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding ElementName=ExcistI, Path=IsChecked}" Value="True">
+											<Setter Property="IsEnabled" Value="True"/>
+										</DataTrigger>
+										<DataTrigger Binding="{Binding ElementName=ExcistI, Path=IsChecked}" Value="False">
+											<Setter Property="IsEnabled" Value="False"/>
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Grid.Style>
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="0.1*"/>
+								<ColumnDefinition Width="0.3*"/>
+							</Grid.ColumnDefinitions>
+
+							<ComboBox Grid.Column="0" Margin="10 0"/>
+
+							<TextBox Grid.Column="1"/>
+
+							<ComboBox Grid.Column="2" Margin="5 0"/>
+						</Grid>
+
+						<RadioButton Name="NewI" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" GroupName="Mode"/>
+
+						<Grid Grid.Column="1" Grid.Row="1" Margin="0 5">
+
+							<Grid.Style>
+								<Style TargetType="Grid">
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding ElementName=NewI, Path=IsChecked}" Value="False">
+											<Setter Property="IsEnabled" Value="False"/>
+										</DataTrigger>
+										<DataTrigger Binding="{Binding ElementName=NewI, Path=IsChecked}" Value="True">
+											<Setter Property="IsEnabled" Value="True"/>
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Grid.Style>
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="0.1*"/>
+								<ColumnDefinition Width="0.3*"/>
+							</Grid.ColumnDefinitions>
+
+							<TextBox Grid.Column="0" Margin="10 0"/>
+
+							<TextBox Grid.Column="1"/>
+
+							<ComboBox Grid.Column="2" Margin="5 0"/>
+						</Grid>
+
+						<Button Grid.Row="2" Grid.ColumnSpan="2" Content="Add" Margin="50 5"/>
+
+					</Grid>
+				</Border>
+
+
+			</Grid>
+		</GroupBox>
+
+		<UniformGrid Grid.Row="3" Rows="1">
+			<Button Margin="5" Content="Save"/>
+			<Button Margin="5" Content="Cancel"/>
+		</UniformGrid>
+
+	</Grid>
+</Window>
