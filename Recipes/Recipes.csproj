@@ -40,6 +40,9 @@
     <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper.FastCrud, Version=2.5.0.39, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.FastCrud.2.5.0.39\lib\net46\Dapper.FastCrud.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -79,7 +82,11 @@
     <Compile Include="Interface\IAddWindowViewModel.cs" />
     <Compile Include="Interface\IMainWindow.cs" />
     <Compile Include="Interface\IMainWindowViewModel.cs" />
+    <Compile Include="Model\Ingredient.cs" />
     <Compile Include="Model\Receipe.cs" />
+    <Compile Include="Model\ReceipeIngridient.cs" />
+    <Compile Include="Model\Unit.cs" />
+    <Compile Include="Repository\RecIngDapper.cs" />
     <Compile Include="Repository\RecipeDupper.cs" />
     <Compile Include="ViewModel\AddWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

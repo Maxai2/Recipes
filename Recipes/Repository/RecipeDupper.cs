@@ -1,6 +1,9 @@
 ﻿using Dapper;
+using Dapper.FastCrud;
 using Recipes.Model;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
@@ -27,48 +30,39 @@ namespace Recipes.Repository
             }
         }
 
-        //private DbConnection _connection;
-        //private DbProviderFactory _factory;
+        //------------------------------------------------------------
 
-        ////------------------------------------------------------------
-
-        //public RecipeDupper()
-        //{
-        //    ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["connectionString"];
-
-        //    _connectionString = settings.ConnectionString;
-
-        //    _factory = DbProviderFactories.GetFactory(settings.ProviderName);
-        //}
-
-        ////------------------------------------------------------------
-
-        //public bool OpenConnection()
-        //{
-        //    try
-        //    {
-        //        _connection = _factory.CreateConnection();
-        //        _connection.ConnectionString = _connectionString;
-        //        _connection.Open();
-        //        return true;
-        //    }
-        //    catch (DbException)
-        //    {
-        //        return false;
-        //    }
-        //}
-        ////----------------------------------------------------------------------
-        //public void CloseConnection()
-        //{
-        //    if (_connection != null)
-        //        _connection.Close();
-        //}
+        public ICollection<Receipe> GetReceipe()
+        {
+            return Connection.Query<Receipe>("SELECT * FROM Receipes").AsList();
+        }
 
         //------------------------------------------------------------
 
-        public ICollection<Receipe> GetRexeipe()
+        public Receipe GetReceipeById(int id)
         {
-            return Connection.Query<>
+            return Connection.Get<Receipe>(new Receipe { Id = id });
+        }
+
+        //------------------------------------------------------------
+
+        public void DeleteReceipe(int id)
+        {
+            Connection.Delete<Receipe>(new Receipe { Id = id });
+        }
+
+        //------------------------------------------------------------
+
+        public void UpdateReceipe(int id)
+        {
+            Connection.Update<Receipe>(new Receipe { Id = id });
+        }
+
+        //------------------------------------------------------------
+
+        public void InsertReceipe(Receipe receipe)
+        {
+            Connection.Insert<Receipe>(receipe);
         }
 
         //------------------------------------------------------------

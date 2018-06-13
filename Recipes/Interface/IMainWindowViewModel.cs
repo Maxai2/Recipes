@@ -12,6 +12,12 @@ namespace Recipes.Interface
 
         ObservableCollection<Receipe> ReceipeList { get; set; }
 
+        ObservableCollection<ReceipeIngridient> ReceipeIngridientList { get; set; }
+
+        ObservableCollection<ReceipeIngridient> ReceipeIngridientListAll { get; set; }
+
+        Receipe SelectedReceipe { get; set; }
+
         IMainWindow View { get; }
     }
 }
