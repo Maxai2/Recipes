@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Recipes.View"
         mc:Ignorable="d"
-        Title="AddWindow" Height="700" Width="400" WindowStartupLocation="CenterOwner">
+        Title="AddWindow" Height="700" Width="500" WindowStartupLocation="CenterOwner">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
@@ -91,10 +91,10 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*"/>
 								<ColumnDefinition Width="0.1*"/>
-								<ColumnDefinition Width="0.3*"/>
+								<ColumnDefinition Width="0.4*"/>
 							</Grid.ColumnDefinitions>
 
-							<ComboBox Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}">
+							<ComboBox Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}" FontSize="12">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
 										<ComboBoxItem Content="{Binding IngredientName}"/>
@@ -104,7 +104,13 @@
 
 							<TextBox Grid.Column="1" Text="{Binding ExcIngQuantity, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 
-							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding ExcUnitList}"/>
+							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding ExcUnitList}" FontSize="12">
+								<ComboBox.ItemTemplate>
+									<DataTemplate>
+										<ComboBoxItem Content="{Binding UnitName}"/>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+							</ComboBox>
 						</Grid>
 
 						<RadioButton Name="NewI" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" GroupName="Mode"/>
@@ -127,7 +133,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*"/>
 								<ColumnDefinition Width="0.1*"/>
-								<ColumnDefinition Width="0.3*"/>
+								<ColumnDefinition Width="0.4*"/>
 							</Grid.ColumnDefinitions>
 
 							<TextBox Grid.Column="0" Margin="10 0" Text="{Binding NewIngName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>

@@ -44,8 +44,8 @@
 
 			<StackPanel Grid.Row="1" VerticalAlignment="Center">
 				<Button Content="Добавить" Margin="5" Command="{Binding AddReceipe}"/>
-				<Button Content="Редактировать" Margin="5" Style="{Binding EnableWhenSel}"/>
-				<Button Content="Удалить" Margin="5" Style="{Binding EnableWhenSel}"/>
+				<Button Content="Редактировать" Margin="5" Style="{StaticResource EnableWhenSel}"/>
+				<Button Content="Удалить" Margin="5" Style="{StaticResource EnableWhenSel}"/>
 			</StackPanel>
 		</Grid>
 

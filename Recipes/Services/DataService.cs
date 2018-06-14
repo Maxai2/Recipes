@@ -13,6 +13,7 @@ namespace Recipes.Services
         IngDapper ingDapper;
         RecIngDapper recIngDapper;
         RecipeDapper recipeDapper;
+        UnitDapper unitDapper;
 
         //----------------------------------------------------------------------
 
@@ -21,6 +22,7 @@ namespace Recipes.Services
             ingDapper = new IngDapper();
             recIngDapper = new RecIngDapper();
             recipeDapper = new RecipeDapper();
+            unitDapper = new UnitDapper();
         }
 
         //----------------------------------------------------------------------
@@ -42,6 +44,13 @@ namespace Recipes.Services
         public ICollection<Receipe> GetReceipe()
         {
             return recipeDapper.GetReceipe();
+        }
+
+        //----------------------------------------------------------------------
+
+        public ICollection<Unit> GetUnits()
+        {
+            return unitDapper.GetUnits();
         }
 
         //----------------------------------------------------------------------

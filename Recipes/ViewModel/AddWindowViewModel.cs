@@ -44,6 +44,13 @@ namespace Recipes.ViewModel
             {
                 IngredientList.Add(item);
             }
+
+            ExcUnitList = new ObservableCollection<Unit>();
+
+            foreach (var item in ds.GetUnits())
+            {
+                ExcUnitList.Add(item);
+            }
         }
 
 

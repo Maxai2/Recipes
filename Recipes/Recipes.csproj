@@ -89,6 +89,7 @@
     <Compile Include="Repository\IngDapper.cs" />
     <Compile Include="Repository\RecIngDapper.cs" />
     <Compile Include="Repository\RecipeDapper.cs" />
+    <Compile Include="Repository\UnitDapper.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="ViewModel\AddWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
