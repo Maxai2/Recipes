@@ -1,18 +1,17 @@
-﻿using System;
+﻿using Dapper;
+using Recipes.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using Dapper;
-using Dapper.FastCrud;
-using Recipes.Model;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Recipes.Repository
 {
-    public class RecIngDapper
+    public class IngDapper
     {
         private IDbConnection connection = null;
         private IDbConnection Connection
@@ -33,13 +32,12 @@ namespace Recipes.Repository
 
         //------------------------------------------------------------
 
-        public ICollection<ReceipeIngridient> GetRecIng()
+        public ICollection<Ingredient> GetIng()
         {
-            return Connection.Query<ReceipeIngridient>("SELECT ReceipeId, Ingredients.Ingredient, Quantity, Units.Unit FROM ReceipesIngredients JOIN Ingredients ON ReceipesIngredients.IngredientId = Ingredients.Id JOIN Units ON Ingredients.UnitId = Units.Id").AsList();
+            return Connection.Query<Ingredient>("SELECT Ingredients.Id, Ingredient AS IngredientName, Units.Unit FROM Ingredients JOIN Units ON Ingredients.UnitId = Units.Id").AsList();
         }
 
-
-        ////------------------------------------------------------------
+        //------------------------------------------------------------
 
         //public Receipe GetReceipeById(int id)
         //{
@@ -67,7 +65,7 @@ namespace Recipes.Repository
         //    Connection.Insert<Receipe>(receipe);
         //}
 
-        //------------------------------------------------------------
+        ////------------------------------------------------------------
 
     }
 }

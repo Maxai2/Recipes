@@ -8,8 +8,10 @@ namespace Recipes.Model
 {
     public class ReceipeIngridient
     {
-        public int Receipe { get; set; }
-        public int Ingredient { get; set; }
+        public int ReceipeId { get; set; }
+        public string Ingredient { get; set; }
+        public string Unit { get; set; }
+
         public float Quantity { get; set; }
     }
 }

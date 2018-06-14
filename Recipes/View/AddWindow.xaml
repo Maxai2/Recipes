@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Recipes.View"
         mc:Ignorable="d"
-        Title="AddWindow" Height="600" Width="400" WindowStartupLocation="CenterOwner">
+        Title="AddWindow" Height="700" Width="400" WindowStartupLocation="CenterOwner">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="0.5*"/>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="1.5*"/>
 			<RowDefinition Height="0.3*"/>
@@ -21,22 +23,40 @@
 			</Grid.ColumnDefinitions>
 
 			<Label Grid.Column="0" Content="Название:" FontSize="16" VerticalAlignment="Center"/>
-			<TextBox Grid.Column="1" VerticalAlignment="Center"/>
+			<TextBox Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewReceipeName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 		</Grid>
 
-		<GroupBox Grid.Row="1" Margin="5" Header="Рецепт" FontSize="17">
-			<TextBox TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto"/>
+		<GroupBox Grid.Row="1" Header="Время готовки:">
+			<TextBox Text="{Binding NewPrepareTime, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 		</GroupBox>
 
-		<GroupBox Grid.Row="2" Margin="5" Header="Ингридиенты" FontSize="17">
+		<GroupBox Grid.Row="2" Header="Заметка:">
+			<TextBox TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding NewNote, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+		</GroupBox>
+
+		<GroupBox Grid.Row="3" Margin="5" Header="Рецепт" FontSize="17">
+			<TextBox TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" Text="{Binding NewDescrip, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+		</GroupBox>
+
+		<GroupBox Grid.Row="4" Margin="5" Header="Ингридиенты" FontSize="17">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition/>
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 
-				<ListBox Grid.Row="0" Margin="5" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
-
+				<ListBox Grid.Row="0" Margin="5" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding SelRecIngList}">
+					
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Margin="-3" Orientation="Horizontal">
+								<TextBlock VerticalAlignment="Center" Text="{Binding Ingredient}"/>
+								<Label Content="{Binding Quantity}"/>
+								<Label Content="{Binding Unit}"/>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+					
 				</ListBox>
 
 				<Border Grid.Row="1" Margin="5" BorderThickness="2" BorderBrush="LightGray">
@@ -74,11 +94,17 @@
 								<ColumnDefinition Width="0.3*"/>
 							</Grid.ColumnDefinitions>
 
-							<ComboBox Grid.Column="0" Margin="10 0"/>
+							<ComboBox Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}">
+								<ComboBox.ItemTemplate>
+									<DataTemplate>
+										<ComboBoxItem Content="{Binding IngredientName}"/>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+							</ComboBox>
 
-							<TextBox Grid.Column="1"/>
+							<TextBox Grid.Column="1" Text="{Binding ExcIngQuantity, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 
-							<ComboBox Grid.Column="2" Margin="5 0"/>
+							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding ExcUnitList}"/>
 						</Grid>
 
 						<RadioButton Name="NewI" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" GroupName="Mode"/>
@@ -104,11 +130,11 @@
 								<ColumnDefinition Width="0.3*"/>
 							</Grid.ColumnDefinitions>
 
-							<TextBox Grid.Column="0" Margin="10 0"/>
+							<TextBox Grid.Column="0" Margin="10 0" Text="{Binding NewIngName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 
-							<TextBox Grid.Column="1"/>
+							<TextBox Grid.Column="1" Text="{Binding NewIngQuantity, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 
-							<ComboBox Grid.Column="2" Margin="5 0"/>
+							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding NewUnitList}"/>
 						</Grid>
 
 						<Button Grid.Row="2" Grid.ColumnSpan="2" Content="Add" Margin="50 5"/>
@@ -120,7 +146,7 @@
 			</Grid>
 		</GroupBox>
 
-		<UniformGrid Grid.Row="3" Rows="1">
+		<UniformGrid Grid.Row="5" Rows="1">
 			<Button Margin="5" Content="Save"/>
 			<Button Margin="5" Content="Cancel"/>
 		</UniformGrid>

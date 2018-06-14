@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recipes.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,6 @@ namespace Recipes.Model
     {
         public int Id { get; set; }
         public string IngredientName { get; set; }
-        public Unit Unit { get; set; }
+        public string Unit { get; set; }
     }
 }

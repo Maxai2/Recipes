@@ -18,6 +18,9 @@ namespace Recipes.View
             DataContext = context;
         }
 
-
+        private void RecipeList_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            RecipeList.SelectedIndex = -1;
+        }
     }
 }

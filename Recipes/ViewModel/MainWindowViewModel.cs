@@ -51,7 +51,7 @@ namespace Recipes.ViewModel
                 
                 foreach (var item in ReceipeIngridientListAll)
                 {
-                    if (selectedReceipe.Id == item.Receipe)
+                    if (selectedReceipe.Id == item.ReceipeId)
                     {
                         ReceipeIngridientList.Add(item);
                     }
