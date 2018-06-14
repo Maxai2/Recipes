@@ -6,6 +6,20 @@
 								xmlns:local="clr-namespace:Recipes"
 								mc:Ignorable="d"
 								Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+
+	<Window.Resources>
+		<Style TargetType="Button" x:Key="EnableWhenSel">
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding ElementName=RecipeList, Path=SelectedIndex}" Value="-1">
+					<Setter Property="IsEnabled" Value="False"/>
+				</DataTrigger>
+				<DataTrigger Binding="{Binding ElementName=RecipeList, Path=SelectedIndex}">
+					<Setter Property="IsEnabled" Value="True"/>
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
+	</Window.Resources>
+	
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="0.5*"/>
@@ -15,7 +29,6 @@
 		<Grid Grid.Column="0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="3*"/>
-				<RowDefinition Height="Auto"/>
 				<RowDefinition/>
 			</Grid.RowDefinitions>
 
@@ -29,15 +42,14 @@
 
 			</ListBox>
 
-			<Separator Grid.Row="1" Height="10"/>
-
-			<StackPanel Grid.Row="2" VerticalAlignment="Center">
-				<Button Content="Удалить" Margin="10"/>
-				<Button Content="Добавить" Margin="10" Command="{Binding AddReceipe}"/>
+			<StackPanel Grid.Row="1" VerticalAlignment="Center">
+				<Button Content="Добавить" Margin="5" Command="{Binding AddReceipe}"/>
+				<Button Content="Редактировать" Margin="5" Style="{Binding EnableWhenSel}"/>
+				<Button Content="Удалить" Margin="5" Style="{Binding EnableWhenSel}"/>
 			</StackPanel>
 		</Grid>
 
-		<Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
+		<Grid Grid.Column="1">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition/>
@@ -58,31 +70,31 @@
 
 			<Label Grid.Row="0" Content="{Binding  SelectedReceipe.Title}" HorizontalAlignment="Center" FontSize="20"/>
 
-			<Grid Margin="10 0" Grid.Row="1">
+			<Grid Margin="10 0" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition/>
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
 					<RowDefinition/>
-					<RowDefinition/>
+					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 
-				<TextBlock Margin="5" Text="{Binding SelectedReceipe.PrepareTime, StringFormat=Prepare time: {0}}" VerticalAlignment="Center"/>
+				<TextBlock Margin="5" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedReceipe.PrepareTime, StringFormat=Время приготовления: {0}}" VerticalAlignment="Center" FontSize="14"/>
 
-				<GroupBox Grid.Row="0" Grid.Column="1" Header="Заметка:" FontSize="15">
+				<GroupBox Margin="5" Grid.Row="2" Grid.Column="1" Header="Заметка:" FontSize="14">
 					<TextBlock TextWrapping="Wrap" Text="{Binding SelectedReceipe.Note}"/>
 				</GroupBox>
 
-				<GroupBox Grid.Column="0" Grid.Row="1" Margin="10" Header="Описание:" FontSize="15">						
+				<GroupBox Grid.Column="0" Grid.RowSpan="3" Margin="5" Header="Описание:" FontSize="14">
+					<ScrollViewer VerticalScrollBarVisibility="Auto">
 						<TextBlock Margin="5" TextWrapping="Wrap" Text="{Binding SelectedReceipe.Descrip}"/>
+					</ScrollViewer>
 				</GroupBox>
 
-				<StackPanel Grid.Column="1" Grid.Row="1" Margin="10">
-					<Label Content="Ингридиенты:" FontSize="15"/>
-
-					<Border BorderThickness="2" BorderBrush="LightGray">
-						<ListBox Margin="5" ItemsSource="{Binding ReceipeIngridientList}">
+				<GroupBox Grid.Column="1" Grid.Row="1" Margin="5" Header="Ингридиенты:" FontSize="14">
+						<ListBox Margin="5" ItemsSource="{Binding ReceipeIngridientList}" BorderThickness="0">
 
 							<ListBox.ItemTemplate>
 								<DataTemplate>
@@ -95,8 +107,7 @@
 							</ListBox.ItemTemplate>
 
 						</ListBox>
-					</Border>
-				</StackPanel>
+				</GroupBox>
 
 			</Grid>
 

@@ -1,6 +1,7 @@
 ﻿using Recipes.Interface;
 using Recipes.Model;
 using Recipes.Repository;
+using Recipes.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,18 +29,18 @@ namespace Recipes.ViewModel
 
         public IAddWindow View { get; private set; }
 
-        IngDapper recIngDapper;
+        DataService ds;
 
         public AddWindowViewModel(IAddWindow view)
         {
             View = view;
             view.BindDataContext(this);
 
-            recIngDapper = new IngDapper();
-
+            ds = new DataService();
+            
             IngredientList = new ObservableCollection<Ingredient>();
 
-            foreach (var item in recIngDapper.GetIng())
+            foreach (var item in ds.GetIng())
             {
                 IngredientList.Add(item);
             }

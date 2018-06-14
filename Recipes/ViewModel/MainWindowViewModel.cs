@@ -5,13 +5,13 @@ using Recipes.Common;
 using Recipes.Interface;
 using Recipes.Model;
 using Recipes.Repository;
+using Recipes.Services;
 
 namespace Recipes.ViewModel
 {
     public class MainWindowViewModel : IMainWindowViewModel
     {
-        RecipeDapper recDup = new RecipeDapper();
-        RecIngDapper recIngDap = new RecIngDapper();
+        DataService ds;
 
         public ObservableCollection<Receipe> ReceipeList { get; set; }
         public ObservableCollection<ReceipeIngridient> ReceipeIngridientList { get; set; }
@@ -22,9 +22,11 @@ namespace Recipes.ViewModel
             View = view;
             View.BindDataContext(this);
 
+            ds = new DataService();
+
             ReceipeList = new ObservableCollection<Receipe>();
 
-            foreach (var item in recDup.GetReceipe())
+            foreach (var item in ds.GetReceipe())
             {
                 ReceipeList.Add(item);
             }
@@ -33,7 +35,7 @@ namespace Recipes.ViewModel
 
             ReceipeIngridientListAll = new ObservableCollection<ReceipeIngridient>();
 
-            foreach (var item in recIngDap.GetRecIng())
+            foreach (var item in ds.GetRecIng())
             {
                 ReceipeIngridientListAll.Add(item);
             }
@@ -45,6 +47,9 @@ namespace Recipes.ViewModel
             get => selectedReceipe;
             set
             {
+                if (value == null)
+                    return;
+
                 selectedReceipe = value;
 
                 ReceipeIngridientList.Clear();
