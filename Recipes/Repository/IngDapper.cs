@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.FastCrud;
 using Recipes.Model;
 using System;
 using System.Collections.Generic;
@@ -32,9 +33,32 @@ namespace Recipes.Repository
 
         //------------------------------------------------------------
 
+        void resetIdentity(string tableName, int resetId)
+        {
+            Connection.Query("DBCC CHECKIDENT(@TableName, RESEED, @ResetId)", new { TableName = tableName, ResetId = resetId });
+        }
+
+        //------------------------------------------------------------
+
+        public int GetLastId()
+        {
+            return Connection.Query<int>("SELECT MAX(Id) FROM Ingredients").Single();
+        }
+
+        //------------------------------------------------------------
+
         public ICollection<Ingredient> GetIng()
         {
             return Connection.Query<Ingredient>("SELECT Ingredients.Id, Ingredient AS IngredientName, Units.Unit FROM Ingredients JOIN Units ON Ingredients.UnitId = Units.Id").AsList();
+        }
+
+        //------------------------------------------------------------
+
+        public void InsertIngredient(string ingredientName, int unitId)
+        {
+            resetIdentity("Ingredients", GetLastId());
+
+            Connection.Query<Ingredient>("INSERT INTO Ingredients(Ingredient, UnitId) VALUES(@Ingredient, @UnitId)", new { Ingredient = ingredientName, UnitId = unitId});
         }
 
         //------------------------------------------------------------
@@ -58,12 +82,7 @@ namespace Recipes.Repository
         //    Connection.Update<Receipe>(new Receipe { Id = id });
         //}
 
-        ////------------------------------------------------------------
 
-        //public void InsertReceipe(Receipe receipe)
-        //{
-        //    Connection.Insert<Receipe>(receipe);
-        //}
 
         ////------------------------------------------------------------
 

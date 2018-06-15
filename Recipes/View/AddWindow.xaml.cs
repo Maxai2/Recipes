@@ -32,5 +32,15 @@ namespace Recipes.View
         {
             DataContext = context;
         }
+
+        public void ShowAlert(string text, string caption)
+        {
+            MessageBox.Show(text, caption);
+        }
+
+        private void ListBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            IngredientList.SelectedIndex = -1;
+        }
     }
 }

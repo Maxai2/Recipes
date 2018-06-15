@@ -27,6 +27,13 @@ namespace Recipes.Services
 
         //----------------------------------------------------------------------
 
+        public int GetLastIdByIng()
+        {
+            return ingDapper.GetLastId();
+        }
+
+        //----------------------------------------------------------------------
+
         public ICollection<ReceipeIngridient> GetRecIng()
         {
             return recIngDapper.GetRecIng();
@@ -55,5 +62,11 @@ namespace Recipes.Services
 
         //----------------------------------------------------------------------
 
+        public void InsertIngredient(string ingredientName, int unitId)
+        {
+            ingDapper.InsertIngredient(ingredientName, unitId);
+        }
+
+        //----------------------------------------------------------------------
     }
 }

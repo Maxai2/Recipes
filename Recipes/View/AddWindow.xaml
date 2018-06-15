@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Recipes.View"
         mc:Ignorable="d"
-        Title="AddWindow" Height="700" Width="500" WindowStartupLocation="CenterOwner">
+        Title="AddWindow" Height="750" Width="500" WindowStartupLocation="CenterOwner">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
@@ -27,7 +27,7 @@
 		</Grid>
 
 		<GroupBox Grid.Row="1" Header="Время готовки:">
-			<TextBox Text="{Binding NewPrepareTime, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+			<TextBox Text="{Binding NewPrepareTime, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
 		</GroupBox>
 
 		<GroupBox Grid.Row="2" Header="Заметка:">
@@ -42,11 +42,11 @@
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition/>
-					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="1.3*"/>
 				</Grid.RowDefinitions>
 
-				<ListBox Grid.Row="0" Margin="5" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding SelRecIngList}">
-					
+				<ListBox Name="IngredientList" Grid.Row="0" Margin="5" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding SelRecIngList}" SelectedIndex="{Binding SelectedIngredientList}" MouseDown="ListBox_MouseDown">
+
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Margin="-3" Orientation="Horizontal">
@@ -56,7 +56,7 @@
 							</StackPanel>
 						</DataTemplate>
 					</ListBox.ItemTemplate>
-					
+
 				</ListBox>
 
 				<Border Grid.Row="1" Margin="5" BorderThickness="2" BorderBrush="LightGray">
@@ -71,7 +71,7 @@
 							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
 
-						<RadioButton Name="ExcistI" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="True" GroupName="Mode"/>
+						<RadioButton Name="ExcistI" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding ExecRadButVal}" GroupName="Mode"/>
 
 						<Grid Grid.Row="0" Grid.Column="1" Margin="0 5">
 
@@ -94,20 +94,20 @@
 								<ColumnDefinition Width="0.4*"/>
 							</Grid.ColumnDefinitions>
 
-							<ComboBox Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}" FontSize="12">
+							<ComboBox Name="CBingList" Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}" FontSize="12" SelectedItem="{Binding SelectedIng, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
-										<ComboBoxItem Content="{Binding IngredientName}"/>
+										<Label Content="{Binding IngredientName}"/>
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>
 
-							<TextBox Grid.Column="1" Text="{Binding ExcIngQuantity, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+							<TextBox Name="tbExcUnitQuant" Grid.Column="1" Text="{Binding ExcIngQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" VerticalAlignment="Center"/>
 
-							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding ExcUnitList}" FontSize="12">
+							<ComboBox Name="CBUnitList" Grid.Column="2" Margin="5 0" ItemsSource="{Binding ExcUnitList}" FontSize="12" SelectedItem="{Binding ExcSelectedUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
-										<ComboBoxItem Content="{Binding UnitName}"/>
+										<Label Content="{Binding UnitName}"/>
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>
@@ -136,14 +136,23 @@
 								<ColumnDefinition Width="0.4*"/>
 							</Grid.ColumnDefinitions>
 
-							<TextBox Grid.Column="0" Margin="10 0" Text="{Binding NewIngName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+							<TextBox Grid.Column="0" Margin="10 0" Text="{Binding NewIngName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" FontSize="12" VerticalAlignment="Center"/>
 
-							<TextBox Grid.Column="1" Text="{Binding NewIngQuantity, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+							<TextBox Grid.Column="1" Text="{Binding NewIngQuantity, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" FontSize="12" VerticalAlignment="Center"/>
 
-							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding NewUnitList}"/>
+							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding NewUnitList}" FontSize="12" SelectedItem="{Binding NewSelectedUnit}">
+								<ComboBox.ItemTemplate>
+									<DataTemplate>
+										<Label Content="{Binding UnitName}"/>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+							</ComboBox>
 						</Grid>
 
-						<Button Grid.Row="2" Grid.ColumnSpan="2" Content="Add" Margin="50 5"/>
+						<UniformGrid Margin="3" Grid.Row="2" Grid.ColumnSpan="2" Rows="1">
+							<Button Content="Add" Margin="5 0" Command="{Binding AddIngridientCom}"/>
+							<Button Content="Delete" Margin="5 0" Command="{Binding DeleteIngridientCom}"/>
+						</UniformGrid>
 
 					</Grid>
 				</Border>

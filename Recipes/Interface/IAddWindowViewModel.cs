@@ -18,13 +18,21 @@ namespace Recipes.Interface
         string NewNote { get; set; }
         string NewDescrip { get; set; }
 
-        ObservableCollection<Ingredient> SelRecIngList { get; set; }
+        ObservableCollection<ReceipeIngridient> SelRecIngList { get; set; }
+
+        bool ExecRadButVal { get; set; }
 
         ObservableCollection<Ingredient> IngredientList { get; set; }
+
+        int SelectedIngredientList { get; set; }
+
+        Ingredient SelectedIng { get; set; }
 
         string ExcIngQuantity { get; set; }
 
         ObservableCollection<Unit> ExcUnitList { get; set; }
+
+        Unit ExcSelectedUnit { get; set; }
 
         string NewIngName { get; set; }
 
@@ -32,7 +40,11 @@ namespace Recipes.Interface
 
         ObservableCollection<Unit> NewUnitList { get; set; }
 
-        ICommand AddIngridientCom { get; set; }
+        Unit NewSelectedUnit { get; set; }
+
+        ICommand AddIngridientCom { get; }
+        ICommand DeleteIngridientCom { get; }
+
         ICommand AddReceipeCom { get; set; }
         ICommand CancelAddingCom { get; set; }
 
