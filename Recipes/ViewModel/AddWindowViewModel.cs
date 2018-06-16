@@ -2,14 +2,9 @@
 using Recipes.Common;
 using Recipes.Interface;
 using Recipes.Model;
-using Recipes.Repository;
 using Recipes.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 //------------------------------------------------------------------------------
@@ -24,7 +19,7 @@ namespace Recipes.ViewModel
         public string NewDescrip { get; set; }
         public string NewReceipeDescrip { get; set; }
         public ObservableCollection<Ingredient> IngredientList { get; set; }
-        public int SelectedIngredientList { get; set; }
+        public int SelectedIngredientList { get; set; } = -1;
 
         private string excIngQuantity;
         public string ExcIngQuantity
@@ -38,8 +33,29 @@ namespace Recipes.ViewModel
         }
 
         public ObservableCollection<Unit> ExcUnitList { get; set; }
-        public string NewIngName { get; set; }
-        public string NewIngQuantity { get; set; }
+
+        private string newIngName;
+        public string NewIngName
+        {
+            get => newIngName;
+            set
+            {
+                newIngName = value;
+                base.OnPropertyChanged();
+            }
+        }
+
+        private string newIngQuantity;
+        public string NewIngQuantity
+        {
+            get => newIngQuantity;
+            set
+            {
+                newIngQuantity = value;
+                base.OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<Unit> NewUnitList { get; set; }
         public ObservableCollection<ReceipeIngridient> SelRecIngList { get; set; }
         public bool ExecRadButVal { get; set; } = true;
@@ -66,9 +82,20 @@ namespace Recipes.ViewModel
             }
         }
 
-        public Unit NewSelectedUnit { get; set; }
+        private Unit newSelectedUnit;
+        public Unit NewSelectedUnit
+        {
+            get => newSelectedUnit;
+            set
+            {
+                newSelectedUnit = value;
+                base.OnPropertyChanged();
+            }
+        }
 
         public IAddWindow View { get; private set; }
+
+        int NewReceipeId;
 
         DataService ds;
 
@@ -80,6 +107,8 @@ namespace Recipes.ViewModel
             view.BindDataContext(this);
 
             ds = new DataService();
+
+            NewReceipeId = ds.GetLastIdByRecipe() + 1;
 
             IngredientList = new ObservableCollection<Ingredient>();
 
@@ -131,7 +160,8 @@ namespace Recipes.ViewModel
                                 {
                                     Ingredient = SelectedIng.IngredientName,
                                     Quantity = Convert.ToSingle(ExcIngQuantity),
-                                    Unit = ExcSelectedUnit.UnitName
+                                    Unit = ExcSelectedUnit.UnitName,
+                                    IngredientId = SelectedIng.Id
                                 });
 
                                 SelectedIng = null;
@@ -165,12 +195,13 @@ namespace Recipes.ViewModel
                                 {
                                     Ingredient = NewIngName,
                                     Quantity = Convert.ToSingle(NewIngQuantity),
-                                    Unit = NewSelectedUnit.UnitName
+                                    Unit = NewSelectedUnit.UnitName,
+                                    IngredientId = ds.GetLastIdByIng()
                                 });
 
-                                //NewIngName = "";
-                                //NewIngQuantity = "";
-                                //NewSelectedUnit = null;
+                                NewIngName = "";
+                                NewIngQuantity = "";
+                                NewSelectedUnit = null;
                             }
                         },
                         (param) =>
@@ -224,19 +255,82 @@ namespace Recipes.ViewModel
 
         //------------------------------------------------------------------------------
 
-        public ICommand AddReceipeCom { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private ICommand addReceipeCom;
+        public ICommand AddReceipeCom
+        {
+            get
+            {
+                if (addReceipeCom is null)
+                {
+                    addReceipeCom = new RelayCommand(
+                        (param) =>
+                        {
+                            Receipe receipe = new Receipe()
+                            {
+                                Descrip = NewDescrip,
+                                Id = NewReceipeId,
+                                Note = NewNote,
+                                Title = NewReceipeName,
+                                PrepareTime = NewPrepareTime
+                            };
+
+                            ds.InsertReceipe(receipe);
+
+                            foreach (var item in SelRecIngList)
+                            {
+                                ds.InsertRecIng(item.IngredientId, NewReceipeId, item.Quantity);
+                            }
+
+                            MessageBox("Рецепт добавлен!", "");
+
+                            Close();
+                        }, 
+                        (param) =>
+                        {
+                            if (NewReceipeName != "" && NewPrepareTime != null && NewDescrip != "" && SelRecIngList.Count > 0)
+                                return true;
+
+                            return false;
+                        });
+                }
+                return addReceipeCom;
+            }
+        }
 
         //------------------------------------------------------------------------------
 
-        public ICommand CancelAddingCom { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private ICommand cancelAddingCom;
+        public ICommand CancelAddingCom
+        {
+            get
+            {
+                if (cancelAddingCom is null)
+                {
+                    cancelAddingCom = new RelayCommand(
+                        (param) =>
+                        {
+                            Close();
+                        });
+                }
+
+                return cancelAddingCom;
+            }
+        }
 
         //------------------------------------------------------------------------------
 
         void MessageBox(string text, string caption)
         {
-            var window = App.Container.Resolve<IAddWindow>();
-            window.ShowAlert(text, caption);
+            var msWindow = App.Container.Resolve<IAddWindow>();
+            msWindow.ShowAlert(text, caption);
         }
 
+        //------------------------------------------------------------------------------
+
+        void Close()
+        {
+            var closeWin = App.Container.Resolve<IAddWindowViewModel>();
+            closeWin.View.Close();
+        }
     }
 }

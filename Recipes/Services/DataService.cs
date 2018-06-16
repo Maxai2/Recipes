@@ -34,6 +34,13 @@ namespace Recipes.Services
 
         //----------------------------------------------------------------------
 
+        public int GetLastIdByRecipe()
+        {
+            return recipeDapper.GetLastId();
+        }
+
+        //----------------------------------------------------------------------
+
         public ICollection<ReceipeIngridient> GetRecIng()
         {
             return recIngDapper.GetRecIng();
@@ -68,5 +75,31 @@ namespace Recipes.Services
         }
 
         //----------------------------------------------------------------------
+
+        public void InsertReceipe(Receipe receipe)
+        {
+            recipeDapper.InsertReceipe(receipe);
+        }
+
+        //----------------------------------------------------------------------
+
+        public void InsertRecIng(int ingredientId, int receipeId, float quantity)
+        {
+            recIngDapper.InsertRecIng(ingredientId, receipeId, quantity);
+        }
+
+        //----------------------------------------------------------------------
+
+        public void DeleteReceipe(int id)
+        {
+            recipeDapper.DeleteReceipe(id);
+        }
+
+        //----------------------------------------------------------------------
+
+        public void DeleteRecIng(int receipeId)
+        {
+            recIngDapper.DeleteRecIng(receipeId);
+        }
     }
 }

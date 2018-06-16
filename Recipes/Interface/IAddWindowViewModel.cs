@@ -45,8 +45,8 @@ namespace Recipes.Interface
         ICommand AddIngridientCom { get; }
         ICommand DeleteIngridientCom { get; }
 
-        ICommand AddReceipeCom { get; set; }
-        ICommand CancelAddingCom { get; set; }
+        ICommand AddReceipeCom { get; }
+        ICommand CancelAddingCom { get; }
 
         IAddWindow View { get; }
     }

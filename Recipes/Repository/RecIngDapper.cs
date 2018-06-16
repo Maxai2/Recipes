@@ -33,41 +33,41 @@ namespace Recipes.Repository
 
         //------------------------------------------------------------
 
+        void resetIdentity(string tableName, int resetId)
+        {
+            Connection.Query("DBCC CHECKIDENT(@TableName, RESEED, @ResetId)", new { TableName = tableName, ResetId = resetId });
+        }
+
+        //------------------------------------------------------------
+
+        public int GetLastId()
+        {
+            return Connection.Query<int>("SELECT MAX(Id) FROM Ingredients").Single();
+        }
+
+        //------------------------------------------------------------
+
         public ICollection<ReceipeIngridient> GetRecIng()
         {
             return Connection.Query<ReceipeIngridient>("SELECT ReceipeId, Ingredients.Ingredient, Quantity, Units.Unit FROM ReceipesIngredients JOIN Ingredients ON ReceipesIngredients.IngredientId = Ingredients.Id JOIN Units ON Ingredients.UnitId = Units.Id").AsList();
         }
 
+        //------------------------------------------------------------
 
-        ////------------------------------------------------------------
+        public void InsertRecIng(int ingredientId, int receipeId, float quantity)
+        {
+            resetIdentity("ReceipesIngredients", GetLastId());
 
-        //public Receipe GetReceipeById(int id)
-        //{
-        //    return Connection.Get<Receipe>(new Receipe { Id = id });
-        //}
-
-        ////------------------------------------------------------------
-
-        //public void DeleteReceipe(int id)
-        //{
-        //    Connection.Delete<Receipe>(new Receipe { Id = id });
-        //}
-
-        ////------------------------------------------------------------
-
-        //public void UpdateReceipe(int id)
-        //{
-        //    Connection.Update<Receipe>(new Receipe { Id = id });
-        //}
-
-        ////------------------------------------------------------------
-
-        //public void InsertReceipe(Receipe receipe)
-        //{
-        //    Connection.Insert<Receipe>(receipe);
-        //}
+            Connection.Query("INSERT INTO ReceipesIngredients(IngredientId, ReceipeId, Quantity) VALUES(@IngredientId, @ReceipeId, @Quantity)", new { IngredientId = ingredientId, ReceipeId = receipeId, Quantity = quantity });
+        }
 
         //------------------------------------------------------------
 
+        public void DeleteRecIng(int receipeId)
+        {
+            Connection.Query("DELETE FROM ReceipesIngredients WHERE ReceipeId = @ReceipeId", new { ReceipeId = receipeId });
+        }
+
+        //------------------------------------------------------------
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using Autofac;
 using Recipes.Common;
@@ -77,6 +78,20 @@ namespace Recipes.ViewModel
                     {
                         var addVm = App.Container.Resolve<IAddWindowViewModel>();
                         addVm.View.ShowDialog();
+
+                        ReceipeList.Clear();
+
+                        foreach (var item in ds.GetReceipe())
+                        {
+                            ReceipeList.Add(item);
+                        }
+
+                        ReceipeIngridientListAll.Clear();
+
+                        foreach (var item in ds.GetRecIng())
+                        {
+                            ReceipeIngridientListAll.Add(item);
+                        }
                     });
                 }
 
@@ -84,10 +99,65 @@ namespace Recipes.ViewModel
             }
         }
 
-        public ICommand RemoveReceipe => throw new System.NotImplementedException();
+        private ICommand removeReceipe;
+        public ICommand RemoveReceipe
+        {
+            get
+            {
+                if (removeReceipe is null)
+                {
+                    removeReceipe = new RelayCommand(
+                        (param) =>
+                        {
+                            ds.DeleteRecIng(selectedReceipe.Id);
 
-        public ICommand EditReceipe => throw new System.NotImplementedException();
+                            ds.DeleteReceipe(selectedReceipe.Id);
+
+                            ReceipeList.Clear();
+
+                            foreach (var item in ds.GetReceipe())
+                            {
+                                ReceipeList.Add(item);
+                            }
+
+                            ReceipeIngridientListAll.Clear();
+
+                            foreach (var item in ds.GetRecIng())
+                            {
+                                ReceipeIngridientListAll.Add(item);
+                            }
+                        });
+                }
+
+                return removeReceipe;
+            }
+        }
+
+        private ICommand editReceipe;
+        public ICommand EditReceipe
+        {
+            get
+            {
+                if (editReceipe is null)
+                {
+                    editReceipe = new RelayCommand(
+                        (param) =>
+                        {
+                            var editVm = App.Container.Resolve<IEditWindow>();
+                            editVm.ShowDialog();
+                        });
+                }
+
+                return editReceipe;
+            }
+        }
 
         public IMainWindow View { get; private set; }
+
+        void MessageBox(string text, string caption)
+        {
+            var msWindow = App.Container.Resolve<IMainWindow>();
+            msWindow.ShowAlert(text, caption);
+        }
     }
 }

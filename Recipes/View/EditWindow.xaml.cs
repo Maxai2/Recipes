@@ -1,24 +1,40 @@
 ﻿using Recipes.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace Recipes.View
 {
     /// <summary>
-    /// Interaction logic for AddWindow.xaml
+    /// Interaction logic for EditWindow.xaml
     /// </summary>
-    public partial class AddWindow : Window, IAddWindow
+    public partial class EditWindow : Window, IEditWindow
     {
-        public AddWindow()
+        public EditWindow()
         {
             InitializeComponent();
 
             Owner = Application.Current.MainWindow;
         }
 
-        public void BindDataContext(IAddWindowViewModel context)
+        public void BindDataContext(IEditWindowViewModel context)
         {
             DataContext = context;
+        }
+
+        public void CloseAddWindow()
+        {
+            this.Close();
         }
 
         public void ShowAlert(string text, string caption)
