@@ -23,9 +23,9 @@ namespace Recipes
             builder.RegisterType<EditWindow>().As<IEditWindow>().SingleInstance();
             #endregion
             #region ViewModel
-            builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>();
-            builder.RegisterType<AddWindowViewModel>().As<IAddWindowViewModel>();
-            builder.RegisterType<EditWindowViewModel>().As<IEditWindowViewModel>();
+            builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>().SingleInstance();
+            builder.RegisterType<AddWindowViewModel>().As<IAddWindowViewModel>().SingleInstance();
+            builder.RegisterType<EditWindowViewModel>().As<IEditWindowViewModel>().SingleInstance();
             #endregion
 
             Container = builder.Build();

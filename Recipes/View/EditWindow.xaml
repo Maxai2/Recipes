@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Recipes.View"
         mc:Ignorable="d"
-        Title="EditWindow" Height="750" Width="500" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
+        Title="EditWindow" Height="700" Width="500" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="0.5*"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="1.5*"/>
-			<RowDefinition Height="0.3*"/>
+			<RowDefinition Height="0.8*"/>
+			<RowDefinition Height="1.7*"/>
+			<RowDefinition Height="0.2*"/>
 		</Grid.RowDefinitions>
 
 		<Grid Grid.Row="0" Margin="5">
@@ -22,30 +22,30 @@
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
 
-			<Label Grid.Column="0" Content="*Название:" FontSize="16" VerticalAlignment="Center"/>
-			<TextBox Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewReceipeName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+			<Label Grid.Column="0" Content="Название:" FontSize="15" VerticalAlignment="Center"/>
+			<TextBox Grid.Column="1" VerticalAlignment="Center" Text="{Binding Receipe.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 		</Grid>
 
-		<GroupBox Grid.Row="1" Header="*Время готовки:">
-			<TextBox Text="{Binding NewPrepareTime, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+		<GroupBox Grid.Row="1" Header="Время готовки:" FontSize="15">
+			<TextBox Text="{Binding Receipe.PrepareTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 		</GroupBox>
 
-		<GroupBox Grid.Row="2" Header="Заметка:">
-			<TextBox TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding NewNote, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+		<GroupBox Grid.Row="2" Header="Заметка:" FontSize="15">
+			<TextBox TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Receipe.Note, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 		</GroupBox>
 
-		<GroupBox Grid.Row="3" Margin="5" Header="*Рецепт" FontSize="17">
-			<TextBox TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" Text="{Binding NewDescrip, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+		<GroupBox Grid.Row="3" Margin="5" Header="Рецепт" FontSize="15">
+			<TextBox TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" Text="{Binding Receipe.Descrip, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 		</GroupBox>
 
-		<GroupBox Grid.Row="4" Margin="5" Header="*Ингридиенты" FontSize="17">
+		<GroupBox Grid.Row="4" Margin="5" Header="Ингридиенты" FontSize="17">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition/>
 					<RowDefinition Height="1.3*"/>
 				</Grid.RowDefinitions>
 
-				<ListBox Name="IngredientList" Grid.Row="0" Margin="5" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding SelRecIngList}" SelectedIndex="{Binding SelectedIngredientList}" MouseDown="ListBox_MouseDown">
+				<ListBox Name="IngredientList" Grid.Row="0" Margin="5" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding RecIngList}" SelectedItem="{Binding SelectedIngredientListItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MouseDown="ListBox_MouseDown">
 
 					<ListBox.ItemTemplate>
 						<DataTemplate>
@@ -59,7 +59,7 @@
 
 				</ListBox>
 
-				<Border Grid.Row="1" Margin="5" BorderThickness="2" BorderBrush="LightGray">
+				<GroupBox Grid.Row="1" Margin="5" BorderThickness="2"  Header="Add or delete ingredients:">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="*"/>
@@ -94,7 +94,7 @@
 								<ColumnDefinition Width="0.4*"/>
 							</Grid.ColumnDefinitions>
 
-							<ComboBox Name="CBingList" Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}" FontSize="12" SelectedItem="{Binding SelectedIng, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+							<ComboBox Name="CBingList" Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientListForAdd}" FontSize="12" SelectedItem="{Binding SelectedIngForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
 										<Label Content="{Binding IngredientName}"/>
@@ -102,9 +102,9 @@
 								</ComboBox.ItemTemplate>
 							</ComboBox>
 
-							<TextBox Name="tbExcUnitQuant" Grid.Column="1" Text="{Binding ExcIngQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" VerticalAlignment="Center"/>
+							<TextBox Name="tbExcUnitQuant" Grid.Column="1" Text="{Binding ExcIngQuantityForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" VerticalAlignment="Center"/>
 
-							<ComboBox Name="CBUnitList" Grid.Column="2" Margin="5 0" ItemsSource="{Binding ExcUnitList}" FontSize="12" SelectedItem="{Binding ExcSelectedUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+							<ComboBox Name="CBUnitList" Grid.Column="2" Margin="5 0" ItemsSource="{Binding ExcUnitListForAdd}" FontSize="12" SelectedItem="{Binding ExcSelectedUnitForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
 										<Label Content="{Binding UnitName}"/>
@@ -150,20 +150,20 @@
 						</Grid>
 
 						<UniformGrid Margin="3" Grid.Row="2" Grid.ColumnSpan="2" Rows="1">
-							<Button Content="Add" Margin="5 0" Command="{Binding AddIngridientCom}"/>
-							<Button Content="Delete" Margin="5 0" Command="{Binding DeleteIngridientCom}"/>
+							<Button Content="Add" Margin="5 0" Command="{Binding AddIngridientCom}" FontSize="13"/>
+							<Button Content="Delete" Margin="5 0" Command="{Binding DeleteIngridientCom}" FontSize="13"/>
 						</UniformGrid>
 
 					</Grid>
-				</Border>
+				</GroupBox>
 
 
 			</Grid>
 		</GroupBox>
 
 		<UniformGrid Grid.Row="5" Rows="1">
-			<Button Margin="5" Content="Save" Command="{Binding AddReceipeCom}"/>
-			<Button Margin="5" Content="Cancel" Command="{Binding CancelAddingCom}"/>
+			<Button Margin="5" Content="Update" Command="{Binding UpdateReceipeCom}"/>
+			<Button Margin="5" Content="Cancel" Command="{Binding CancelUpdateCom}"/>
 		</UniformGrid>
 
 	</Grid>

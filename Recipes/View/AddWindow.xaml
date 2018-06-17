@@ -6,7 +6,7 @@
 								xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Recipes.View"
         mc:Ignorable="d"
-        Title="AddWindow" Height="750" Width="500" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
+        Title="AddWindow" Height="750" Width="500" WindowStyle="None" WindowStartupLocation="CenterOwner">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
@@ -24,7 +24,7 @@
 			</Grid.ColumnDefinitions>
 
 			<Label Grid.Column="0" Content="*Название:" FontSize="16" VerticalAlignment="Center"/>
-			<TextBox Grid.Column="1" VerticalAlignment="Center" Text="{Binding receipe.Title, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+			<TextBox Grid.Column="1" VerticalAlignment="Center" Text="{Binding NewReceipeName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 		</Grid>
 
 		<GroupBox Grid.Row="1" Header="*Время готовки:">
@@ -35,11 +35,11 @@
 			<TextBox TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding NewNote, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 		</GroupBox>
 
-		<GroupBox Grid.Row="3" Margin="5" Header="*Рецепт" FontSize="17">
+		<GroupBox Grid.Row="3" Margin="5" Header="*Рецепт" FontSize="15">
 			<TextBox TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" Text="{Binding NewDescrip, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
 		</GroupBox>
 
-		<GroupBox Grid.Row="4" Margin="5" Header="*Ингридиенты" FontSize="17">
+		<GroupBox Grid.Row="4" Margin="5" Header="*Ингридиенты" FontSize="15">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition/>

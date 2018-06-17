@@ -27,10 +27,7 @@ namespace Recipes.ViewModel
 
             ReceipeList = new ObservableCollection<Receipe>();
 
-            foreach (var item in ds.GetReceipe())
-            {
-                ReceipeList.Add(item);
-            }
+            GetReceipeWithModif();
 
             ReceipeIngridientList = new ObservableCollection<ReceipeIngridient>();
 
@@ -54,7 +51,7 @@ namespace Recipes.ViewModel
                 selectedReceipe = value;
 
                 ReceipeIngridientList.Clear();
-                
+
                 foreach (var item in ReceipeIngridientListAll)
                 {
                     if (selectedReceipe.Id == item.ReceipeId)
@@ -81,10 +78,7 @@ namespace Recipes.ViewModel
 
                         ReceipeList.Clear();
 
-                        foreach (var item in ds.GetReceipe())
-                        {
-                            ReceipeList.Add(item);
-                        }
+                        GetReceipeWithModif();
 
                         ReceipeIngridientListAll.Clear();
 
@@ -143,8 +137,8 @@ namespace Recipes.ViewModel
                     editReceipe = new RelayCommand(
                         (param) =>
                         {
-                            var editVm = App.Container.Resolve<IEditWindow>();
-                            editVm.ShowDialog();
+                            var editVm = App.Container.Resolve<IEditWindowViewModel>();
+                            editVm.View.ShowDialog();
                         });
                 }
 
@@ -158,6 +152,22 @@ namespace Recipes.ViewModel
         {
             var msWindow = App.Container.Resolve<IMainWindow>();
             msWindow.ShowAlert(text, caption);
+        }
+
+        void GetReceipeWithModif()
+        {
+            foreach (var item in ds.GetReceipe())
+            {
+                Receipe receipe = new Receipe();
+
+                receipe.Id = item.Id;
+                receipe.Note = item.Note;
+                receipe.PrepareTime = item.PrepareTime;
+                receipe.Title = item.Title;
+                item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
+
+                ReceipeList.Add(item);
+            }
         }
     }
 }
