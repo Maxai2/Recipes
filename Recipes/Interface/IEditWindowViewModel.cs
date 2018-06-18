@@ -19,9 +19,13 @@ namespace Recipes.Interface
 
         ReceipeIngridient SelectedIngredientListItem { get; set; }
 
+        Ingredient SelectedIngForUpdate { get; set; }
+
+        ICommand UpdateIngCom { get; }
+
         bool ExecRadButVal { get; set; }
 
-        ObservableCollection<Ingredient>  IngredientList { get; set; }
+        ObservableCollection<Ingredient> IngredientList { get; set; }
 
         Ingredient SelectedIng { get; set; }
 

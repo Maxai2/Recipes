@@ -25,9 +25,35 @@ namespace Recipes.ViewModel
 
         public ObservableCollection<ReceipeIngridient> RecIngList { get; set; }
 
-        public ReceipeIngridient SelectedIngredientListItem { get; set; }
+        private ReceipeIngridient selectedIngredientListItem;
+        public ReceipeIngridient SelectedIngredientListItem
+        {
+            get => selectedIngredientListItem;
+            set
+            {
+                selectedIngredientListItem = value;
+                selectedIngForUpdate = IngredientList.FirstOrDefault(f => f.IngredientName == selectedIngredientListItem.Ingredient);
 
-        public ObservableCollection<Ingredient> IngredientList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+                //selectedIngForUpdate.IngredientName = selectedIngredientListItem.Ingredient;
+                //sece
+
+                base.OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Ingredient> IngredientList { get; set; }
+
+        private Ingredient selectedIngForUpdate;
+        public Ingredient SelectedIngForUpdate
+        {
+            get => selectedIngForUpdate;
+            set
+            {
+                selectedIngForUpdate = value;
+                base.OnPropertyChanged();
+            }
+        }
+
 
         public EditWindowViewModel(IEditWindow view)
         {
@@ -45,6 +71,36 @@ namespace Recipes.ViewModel
             foreach (var item in MainRes.ReceipeIngridientList)
             {
                 RecIngList.Add(item);
+            }
+
+            selectedIngForUpdate = new Ingredient();
+
+            selectedIngredientListItem = new ReceipeIngridient();
+
+            IngredientList = new ObservableCollection<Ingredient>();
+
+            foreach (var item in ds.GetIng())
+            {
+                IngredientList.Add(item);
+            }
+        }
+
+        private ICommand updateIngCom;
+        public ICommand UpdateIngCom
+        {
+            get
+            {
+
+                if (updateIngCom is null)
+                {
+                    updateIngCom = new RelayCommand(
+                        (param) =>
+                        {
+
+                        });
+                }
+
+                return updateIngCom;
             }
         }
 
@@ -64,6 +120,7 @@ namespace Recipes.ViewModel
         public ICommand UpdateReceipeCom => throw new NotImplementedException();
 
         public ICommand CancelUpdateCom => throw new NotImplementedException();
+
 
         void MessageBox(string text, string caption)
         {

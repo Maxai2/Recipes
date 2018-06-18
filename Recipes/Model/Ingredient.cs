@@ -7,10 +7,21 @@ using System.Threading.Tasks;
 
 namespace Recipes.Model
 {
-    public class Ingredient
+    public class Ingredient : NotifiableObject
     {
         public int Id { get; set; }
-        public string IngredientName { get; set; }
+
+        private string ingredientName;
+        public string IngredientName
+        {
+            get => ingredientName;
+            set
+            {
+                ingredientName = value;
+                base.OnPropertyChanged();
+            }
+        }
+
         public string Unit { get; set; }
     }
 }
