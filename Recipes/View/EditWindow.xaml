@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Recipes.View"
         mc:Ignorable="d"
-        Title="EditWindow" Height="700" Width="500" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
+        Title="EditWindow" Height="750" Width="500" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
@@ -42,6 +42,7 @@
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition/>
+					<RowDefinition/>
 					<RowDefinition Height="1.3*"/>
 				</Grid.RowDefinitions>
 
@@ -59,7 +60,46 @@
 
 				</ListBox>
 
-				<GroupBox Grid.Row="1" Margin="5" BorderThickness="2"  Header="Add or delete ingredients:">
+				<GroupBox Grid.Row="1" Header="Изменение ингридиентов:">
+
+					<Grid Margin="5">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="1.5*"/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+
+						<Grid Grid.Row="0" Margin="5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="0.1*"/>
+								<ColumnDefinition Width="0.4*"/>
+							</Grid.ColumnDefinitions>
+
+							<ComboBox Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientListForAdd}" FontSize="12" SelectedItem="{Binding SelectedIngForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+								<ComboBox.ItemTemplate>
+									<DataTemplate>
+										<Label Content="{Binding IngredientName}"/>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+							</ComboBox>
+
+							<TextBox Grid.Column="1" Text="{Binding ExcIngQuantityForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" VerticalAlignment="Center"/>
+
+							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding ExcUnitListForAdd}" FontSize="12" SelectedItem="{Binding ExcSelectedUnitForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+								<ComboBox.ItemTemplate>
+									<DataTemplate>
+										<Label Content="{Binding UnitName}"/>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+							</ComboBox>
+						</Grid>
+
+						<Button Grid.Row="1" Content="Изменить" FontSize="15"/>
+
+					</Grid>
+				</GroupBox>
+
+				<GroupBox Grid.Row="2" Margin="5" BorderThickness="2"  Header="Add or delete ingredients:">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="*"/>
