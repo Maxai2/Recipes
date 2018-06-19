@@ -4,7 +4,7 @@
     {
         void BindDataContext(IAddWindowViewModel context);
         void ShowAlert(string text, string caption);
-        void Close();
+        void Hide();
         bool? ShowDialog();
     }
 }

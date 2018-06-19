@@ -10,7 +10,7 @@ namespace Recipes.Interface
     {
         void BindDataContext(IEditWindowViewModel context);
         void ShowAlert(string text, string caption);
-        void CloseAddWindow();
+        void Hide();
         bool? ShowDialog();
     }
 }

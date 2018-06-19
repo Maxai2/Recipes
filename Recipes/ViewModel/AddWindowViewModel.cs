@@ -330,7 +330,7 @@ namespace Recipes.ViewModel
         void Close()
         {
             var closeWin = App.Container.Resolve<IAddWindowViewModel>();
-            closeWin.View.Close();
+            closeWin.View.Hide();
         }
     }
 }

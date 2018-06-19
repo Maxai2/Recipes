@@ -15,46 +15,6 @@ namespace Recipes.ViewModel
 {
     public class EditWindowViewModel : NotifiableObject, IEditWindowViewModel
     {
-        DataService ds;
-
-        public IEditWindow View { get; private set; }
-
-        public Receipe Receipe { get; set; }
-
-        public bool ExecRadButVal { get; set; } = true;
-
-        public ObservableCollection<ReceipeIngridient> RecIngList { get; set; }
-
-        private ReceipeIngridient selectedIngredientListItem;
-        public ReceipeIngridient SelectedIngredientListItem
-        {
-            get => selectedIngredientListItem;
-            set
-            {
-                selectedIngredientListItem = value;
-                selectedIngForUpdate = IngredientList.FirstOrDefault(f => f.IngredientName == selectedIngredientListItem.Ingredient);
-
-                //selectedIngForUpdate.IngredientName = selectedIngredientListItem.Ingredient;
-                //sece
-
-                base.OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<Ingredient> IngredientList { get; set; }
-
-        private Ingredient selectedIngForUpdate;
-        public Ingredient SelectedIngForUpdate
-        {
-            get => selectedIngForUpdate;
-            set
-            {
-                selectedIngForUpdate = value;
-                base.OnPropertyChanged();
-            }
-        }
-
-
         public EditWindowViewModel(IEditWindow view)
         {
             View = view;
@@ -72,16 +32,27 @@ namespace Recipes.ViewModel
             {
                 RecIngList.Add(item);
             }
+        }
 
-            selectedIngForUpdate = new Ingredient();
+        DataService ds;
 
-            selectedIngredientListItem = new ReceipeIngridient();
+        public IEditWindow View { get; private set; }
 
-            IngredientList = new ObservableCollection<Ingredient>();
+        public Receipe Receipe { get; set; }
 
-            foreach (var item in ds.GetIng())
+        public bool ExecRadButVal { get; set; } = true;
+
+        public ObservableCollection<ReceipeIngridient> RecIngList { get; set; }
+
+
+        private ReceipeIngridient selectedIngredientListItem;
+        public ReceipeIngridient SelectedIngredientListItem
+        {
+            get => selectedIngredientListItem;
+            set
             {
-                IngredientList.Add(item);
+                selectedIngredientListItem = value;
+                base.OnPropertyChanged();
             }
         }
 
@@ -104,22 +75,30 @@ namespace Recipes.ViewModel
             }
         }
 
-        public Ingredient SelectedIng { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ExcIngQuantity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ObservableCollection<Unit> ExcUnitList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Unit ExcSelectedUnit { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string NewIngName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string NewIngQuantity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public ObservableCollection<Unit> NewUnitList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Unit NewSelectedUnit { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
         public ICommand AddIngridientCom => throw new NotImplementedException();
 
         public ICommand DeleteIngridientCom => throw new NotImplementedException();
 
         public ICommand UpdateReceipeCom => throw new NotImplementedException();
 
-        public ICommand CancelUpdateCom => throw new NotImplementedException();
+
+        private ICommand cancelUpdateCom;
+        public ICommand CancelUpdateCom
+        {
+            get
+            {
+                if (cancelUpdateCom is null)
+                {
+                    cancelUpdateCom = new RelayCommand(
+                        (param) =>
+                        {
+                            Close();
+                        });
+                }
+
+                return cancelUpdateCom;
+            }
+        }
 
 
         void MessageBox(string text, string caption)
@@ -128,5 +107,9 @@ namespace Recipes.ViewModel
             MsWin.View.ShowAlert(text, caption);
         }
 
+        void Close()
+        {
+            App.Container.Resolve<IEditWindowViewModel>().View.Hide();
+        }
     }
 }

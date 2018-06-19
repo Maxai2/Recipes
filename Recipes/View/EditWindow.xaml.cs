@@ -32,11 +32,6 @@ namespace Recipes.View
             DataContext = context;
         }
 
-        public void CloseAddWindow()
-        {
-            this.Close();
-        }
-
         public void ShowAlert(string text, string caption)
         {
             MessageBox.Show(text, caption);
