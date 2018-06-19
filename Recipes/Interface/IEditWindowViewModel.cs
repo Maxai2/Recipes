@@ -19,12 +19,13 @@ namespace Recipes.Interface
 
         ReceipeIngridient SelectedIngredientListItem { get; set; }
 
+        string SelectedIngForUpdate { get; set; }
+
+        ObservableCollection<string> IngredientList { get; set; }
+
         ICommand AddIngridientCom { get; }
-
         ICommand DeleteIngridientCom { get; }
-
         ICommand UpdateReceipeCom { get; }
-
         ICommand CancelUpdateCom { get; }
     }
 }

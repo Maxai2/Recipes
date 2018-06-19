@@ -32,6 +32,13 @@ namespace Recipes.ViewModel
             {
                 RecIngList.Add(item);
             }
+
+            IngredientList = new ObservableCollection<string>();
+
+            foreach (var item in ds.GetIng())
+            {
+                IngredientList.Add(item.IngredientName);
+            }
         }
 
         DataService ds;
@@ -44,6 +51,16 @@ namespace Recipes.ViewModel
 
         public ObservableCollection<ReceipeIngridient> RecIngList { get; set; }
 
+        private string selectedIngForUpdate;
+        public string SelectedIngForUpdate
+        {
+            get => selectedIngForUpdate;
+            set
+            {
+                selectedIngForUpdate = value;
+                base.OnPropertyChanged();
+            }
+        }
 
         private ReceipeIngridient selectedIngredientListItem;
         public ReceipeIngridient SelectedIngredientListItem
@@ -52,9 +69,16 @@ namespace Recipes.ViewModel
             set
             {
                 selectedIngredientListItem = value;
+
+                selectedIngForUpdate = IngredientList.FirstOrDefault(f => f == selectedIngredientListItem.Ingredient);
+
                 base.OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<string> IngredientList { get; set; }
+
+
 
         private ICommand updateIngCom;
         public ICommand UpdateIngCom

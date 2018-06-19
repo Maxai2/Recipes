@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Recipes.View"
         mc:Ignorable="d"
-        Title="EditWindow" Height="800" Width="500" WindowStyle="None" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+        Title="EditWindow" Height="800" Width="500" WindowStyle="None" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" MouseLeftButtonDown="Window_MouseLeftButtonDown">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
@@ -79,7 +79,7 @@
 																	SelectedItem="{Binding SelectedIngForUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
-										<Label Content="{Binding IngredientName}"/>
+										<Label Content="{Binding }"/>
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>

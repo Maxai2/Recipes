@@ -30,5 +30,10 @@ namespace Recipes.View
         {
             IngredientList.SelectedIndex = -1;
         }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }
