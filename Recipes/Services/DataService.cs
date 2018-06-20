@@ -101,5 +101,12 @@ namespace Recipes.Services
         {
             recIngDapper.DeleteRecIng(receipeId);
         }
+
+        //----------------------------------------------------------------------
+
+        public int GetUnitIdByName(string unitName)
+        {
+            return unitDapper.GetUnitIdByName(unitName);
+        }
     }
 }

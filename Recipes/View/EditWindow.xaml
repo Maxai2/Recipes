@@ -42,11 +42,11 @@
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition/>
-					<RowDefinition Height="1.3*"/>
+					<RowDefinition Height="*"/>
 					<RowDefinition Height="1.3*"/>
 				</Grid.RowDefinitions>
 
-				<ListBox Name="IngredientList" Grid.Row="0" Margin="5" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding RecIngList}" SelectedItem="{Binding SelectedIngredientListItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MouseDown="ListBox_MouseDown">
+				<ListBox Name="IngredientList" Grid.Row="0" Margin="5" BorderThickness="2" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding RecIngList}" SelectedItem="{Binding SelectedIngredientListItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedIngredientListIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MouseDown="ListBox_MouseDown">
 
 					<ListBox.ItemTemplate>
 						<DataTemplate>
@@ -64,19 +64,18 @@
 
 					<Grid Margin="5">
 						<Grid.RowDefinitions>
-							<RowDefinition Height="1.5*"/>
 							<RowDefinition/>
+							<RowDefinition Height="Auto"/>
 						</Grid.RowDefinitions>
 
-						<Grid Grid.Row="0" Margin="5">
+						<Grid Grid.Row="0" Margin="0">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*"/>
 								<ColumnDefinition Width="0.1*"/>
 								<ColumnDefinition Width="0.4*"/>
 							</Grid.ColumnDefinitions>
 
-							<ComboBox Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}" FontSize="12" 
-																	SelectedItem="{Binding SelectedIngForUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+							<ComboBox Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}" FontSize="12" SelectedItem="{Binding SelectedIngForUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
 										<Label Content="{Binding }"/>
@@ -86,16 +85,16 @@
 
 							<TextBox Grid.Column="1" Text="{Binding ExcIngQuantityForUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" VerticalAlignment="Center"/>
 
-							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding ExcUnitListForUpdate}" FontSize="12" SelectedItem="{Binding ExcSelectedUnitForUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+							<ComboBox Margin="10 5" Grid.Column="2" ItemsSource="{Binding UnitList}" FontSize="12" SelectedItem="{Binding ExcSelectedUnitForUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
-										<Label Content="{Binding UnitName}"/>
+										<Label Content="{Binding }"/>
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>
 						</Grid>
 
-						<Button Margin="13 0" Grid.Row="1" Content="Изменить" FontSize="13" Command="{Binding UpdateIngCom}"/>
+						<Button Margin="10 0" Grid.Row="1" Content="Изменить" FontSize="13" Command="{Binding UpdateIngCom}"/>
 
 					</Grid>
 				</GroupBox>
@@ -138,17 +137,17 @@
 							<ComboBox Name="CBingList" Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}" FontSize="12" SelectedItem="{Binding SelectedIngForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
-										<Label Content="{Binding IngredientName}"/>
+										<Label Content="{Binding}"/>
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>
 
 							<TextBox Name="tbExcUnitQuant" Grid.Column="1" Text="{Binding ExcIngQuantityForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" VerticalAlignment="Center"/>
 
-							<ComboBox Name="CBUnitList" Grid.Column="2" Margin="5 0" ItemsSource="{Binding ExcUnitListForAdd}" FontSize="12" SelectedItem="{Binding ExcSelectedUnitForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+							<ComboBox Name="CBUnitList" Grid.Column="2" Margin="5 0" ItemsSource="{Binding UnitList}" FontSize="12" SelectedItem="{Binding ExcSelectedUnitForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
-										<Label Content="{Binding UnitName}"/>
+										<Label Content="{Binding}"/>
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>
@@ -181,10 +180,10 @@
 
 							<TextBox Grid.Column="1" Text="{Binding NewIngQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" VerticalAlignment="Center"/>
 
-							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding NewUnitList}" FontSize="12" SelectedItem="{Binding NewSelectedUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+							<ComboBox Grid.Column="2" Margin="5 0" ItemsSource="{Binding UnitList}" FontSize="12" SelectedItem="{Binding NewSelectedUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
-										<Label Content="{Binding UnitName}"/>
+										<Label Content="{Binding}"/>
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>

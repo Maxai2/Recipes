@@ -18,6 +18,8 @@ namespace Recipes.Interface
 
         Receipe SelectedReceipe { get; set; }
 
+        //string SearchProp { get; set; }
+
         IMainWindow View { get; }
     }
 }

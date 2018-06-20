@@ -39,10 +39,10 @@ namespace Recipes.Repository
 
         //------------------------------------------------------------
 
-        //public Receipe GetReceipeById(int id)
-        //{
-        //    return Connection.Get<Receipe>(new Receipe { Id = id });
-        //}
+        public int GetUnitIdByName(string unitName)
+        {
+            return Connection.Query<int>("SELECT Id FROM Units WHERE Unit = @UnitName", new { UnitName = unitName }).Single();
+        }
 
         ////------------------------------------------------------------
 

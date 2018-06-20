@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Autofac;
@@ -10,7 +12,7 @@ using Recipes.Services;
 
 namespace Recipes.ViewModel
 {
-    public class MainWindowViewModel : IMainWindowViewModel
+    public class MainWindowViewModel : NotifiableObject, IMainWindowViewModel
     {
         DataService ds;
 
@@ -38,6 +40,22 @@ namespace Recipes.ViewModel
                 ReceipeIngridientListAll.Add(item);
             }
         }
+
+        //private string searchProp = "По алфавиту";
+        //public string SearchProp
+        //{
+        //    get => searchProp;
+        //    set
+        //    {
+        //        searchProp = value;
+
+        //        ReceipeList.Clear();
+
+        //        GetReceipeWithModif(searchProp);
+
+        //        base.OnPropertyChanged();
+        //    }
+        //}
 
         private Receipe selectedReceipe;
         public Receipe SelectedReceipe
@@ -168,6 +186,78 @@ namespace Recipes.ViewModel
 
                 ReceipeList.Add(item);
             }
+
+            //switch (searchProp)
+            //{
+            //    case "По алфавиту":
+            //        {
+            //            foreach (var item in ds.GetReceipe().OrderBy(f => f.Title))
+            //            {
+            //                Receipe receipe = new Receipe();
+
+            //                receipe.Id = item.Id;
+            //                receipe.Note = item.Note;
+            //                receipe.PrepareTime = item.PrepareTime;
+            //                receipe.Title = item.Title;
+            //                item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
+
+            //                ReceipeList.Add(item);
+            //            }
+
+            //            break;
+            //        }
+            //    case "Против алфавита":
+            //        {
+            //            foreach (var item in ds.GetReceipe().OrderByDescending(f => f.Title))
+            //            {
+            //                Receipe receipe = new Receipe();
+
+            //                receipe.Id = item.Id;
+            //                receipe.Note = item.Note;
+            //                receipe.PrepareTime = item.PrepareTime;
+            //                receipe.Title = item.Title;
+            //                item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
+
+            //                ReceipeList.Add(item);
+            //            }
+
+            //            break;
+            //        }
+            //    case "По времени":
+            //        {
+            //            foreach (var item in ds.GetReceipe().OrderBy(f => f.PrepareTime))
+            //            {
+            //                Receipe receipe = new Receipe();
+
+            //                receipe.Id = item.Id;
+            //                receipe.Note = item.Note;
+            //                receipe.PrepareTime = item.PrepareTime;
+            //                receipe.Title = item.Title;
+            //                item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
+
+            //                ReceipeList.Add(item);
+            //            }
+
+            //            break;
+            //        }
+            //    case "Против времени":
+            //        {
+            //            foreach (var item in ds.GetReceipe().OrderByDescending(f => f.PrepareTime))
+            //            {
+            //                Receipe receipe = new Receipe();
+
+            //                receipe.Id = item.Id;
+            //                receipe.Note = item.Note;
+            //                receipe.PrepareTime = item.PrepareTime;
+            //                receipe.Title = item.Title;
+            //                item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
+
+            //                ReceipeList.Add(item);
+            //            }
+
+            //            break;
+            //        }
+            //}
         }
     }
 }
