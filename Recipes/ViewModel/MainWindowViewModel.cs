@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Autofac;
 using Recipes.Common;
@@ -19,6 +20,8 @@ namespace Recipes.ViewModel
         public ObservableCollection<Receipe> ReceipeList { get; set; }
         public ObservableCollection<ReceipeIngridient> ReceipeIngridientList { get; set; }
         public ObservableCollection<ReceipeIngridient> ReceipeIngridientListAll { get; set; }
+        public ObservableCollection<string> OrderList { get; set; }
+
 
         public MainWindowViewModel(IMainWindow view)
         {
@@ -27,9 +30,11 @@ namespace Recipes.ViewModel
 
             ds = new DataService();
 
+            OrderList = new ObservableCollection<string>() { "По алфавиту", "Против алфавита", "По времени", "Против времени" };
+
             ReceipeList = new ObservableCollection<Receipe>();
 
-            GetReceipeWithModif();
+            SelOrder = "По алфавиту";
 
             ReceipeIngridientList = new ObservableCollection<ReceipeIngridient>();
 
@@ -41,21 +46,21 @@ namespace Recipes.ViewModel
             }
         }
 
-        //private string searchProp = "По алфавиту";
-        //public string SearchProp
-        //{
-        //    get => searchProp;
-        //    set
-        //    {
-        //        searchProp = value;
+        private string selOrder;
+        public string SelOrder
+        {
+            get => selOrder;
+            set
+            {
+                selOrder = value;
 
-        //        ReceipeList.Clear();
+                ReceipeList.Clear();
 
-        //        GetReceipeWithModif(searchProp);
+                GetReceipeWithModif(selOrder);
 
-        //        base.OnPropertyChanged();
-        //    }
-        //}
+                base.OnPropertyChanged();
+            }
+        }
 
         private Receipe selectedReceipe;
         public Receipe SelectedReceipe
@@ -77,6 +82,8 @@ namespace Recipes.ViewModel
                         ReceipeIngridientList.Add(item);
                     }
                 }
+
+                base.OnPropertyChanged();
             }
         }
 
@@ -96,7 +103,7 @@ namespace Recipes.ViewModel
 
                         ReceipeList.Clear();
 
-                        GetReceipeWithModif();
+                        GetReceipeWithModif(SelOrder);
 
                         ReceipeIngridientListAll.Clear();
 
@@ -172,92 +179,92 @@ namespace Recipes.ViewModel
             msWindow.ShowAlert(text, caption);
         }
 
-        void GetReceipeWithModif()
+        void GetReceipeWithModif(string searchMode)
         {
-            foreach (var item in ds.GetReceipe())
-            {
-                Receipe receipe = new Receipe();
-
-                receipe.Id = item.Id;
-                receipe.Note = item.Note;
-                receipe.PrepareTime = item.PrepareTime;
-                receipe.Title = item.Title;
-                item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
-
-                ReceipeList.Add(item);
-            }
-
-            //switch (searchProp)
+            //foreach (var item in ds.GetReceipe())
             //{
-            //    case "По алфавиту":
-            //        {
-            //            foreach (var item in ds.GetReceipe().OrderBy(f => f.Title))
-            //            {
-            //                Receipe receipe = new Receipe();
+            //    Receipe receipe = new Receipe();
 
-            //                receipe.Id = item.Id;
-            //                receipe.Note = item.Note;
-            //                receipe.PrepareTime = item.PrepareTime;
-            //                receipe.Title = item.Title;
-            //                item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
+            //    receipe.Id = item.Id;
+            //    receipe.Note = item.Note;
+            //    receipe.PrepareTime = item.PrepareTime;
+            //    receipe.Title = item.Title;
+            //    item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
 
-            //                ReceipeList.Add(item);
-            //            }
-
-            //            break;
-            //        }
-            //    case "Против алфавита":
-            //        {
-            //            foreach (var item in ds.GetReceipe().OrderByDescending(f => f.Title))
-            //            {
-            //                Receipe receipe = new Receipe();
-
-            //                receipe.Id = item.Id;
-            //                receipe.Note = item.Note;
-            //                receipe.PrepareTime = item.PrepareTime;
-            //                receipe.Title = item.Title;
-            //                item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
-
-            //                ReceipeList.Add(item);
-            //            }
-
-            //            break;
-            //        }
-            //    case "По времени":
-            //        {
-            //            foreach (var item in ds.GetReceipe().OrderBy(f => f.PrepareTime))
-            //            {
-            //                Receipe receipe = new Receipe();
-
-            //                receipe.Id = item.Id;
-            //                receipe.Note = item.Note;
-            //                receipe.PrepareTime = item.PrepareTime;
-            //                receipe.Title = item.Title;
-            //                item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
-
-            //                ReceipeList.Add(item);
-            //            }
-
-            //            break;
-            //        }
-            //    case "Против времени":
-            //        {
-            //            foreach (var item in ds.GetReceipe().OrderByDescending(f => f.PrepareTime))
-            //            {
-            //                Receipe receipe = new Receipe();
-
-            //                receipe.Id = item.Id;
-            //                receipe.Note = item.Note;
-            //                receipe.PrepareTime = item.PrepareTime;
-            //                receipe.Title = item.Title;
-            //                item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
-
-            //                ReceipeList.Add(item);
-            //            }
-
-            //            break;
-            //        }
+            //    ReceipeList.Add(item);
             //}
+
+            switch (searchMode)
+            {
+                case "По алфавиту":
+                    {
+                        foreach (var item in ds.GetReceipe().OrderBy(f => f.Title))
+                        {
+                            Receipe receipe = new Receipe();
+
+                            receipe.Id = item.Id;
+                            receipe.Note = item.Note;
+                            receipe.PrepareTime = item.PrepareTime;
+                            receipe.Title = item.Title;
+                            item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
+
+                            ReceipeList.Add(item);
+                        }
+
+                        break;
+                    }
+                case "Против алфавита":
+                    {
+                        foreach (var item in ds.GetReceipe().OrderByDescending(f => f.Title))
+                        {
+                            Receipe receipe = new Receipe();
+
+                            receipe.Id = item.Id;
+                            receipe.Note = item.Note;
+                            receipe.PrepareTime = item.PrepareTime;
+                            receipe.Title = item.Title;
+                            item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
+
+                            ReceipeList.Add(item);
+                        }
+
+                        break;
+                    }
+                case "По времени":
+                    {
+                        foreach (var item in ds.GetReceipe().OrderBy(f => f.PrepareTime))
+                        {
+                            Receipe receipe = new Receipe();
+
+                            receipe.Id = item.Id;
+                            receipe.Note = item.Note;
+                            receipe.PrepareTime = item.PrepareTime;
+                            receipe.Title = item.Title;
+                            item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
+
+                            ReceipeList.Add(item);
+                        }
+
+                        break;
+                    }
+                case "Против времени":
+                    {
+                        foreach (var item in ds.GetReceipe().OrderByDescending(f => f.PrepareTime))
+                        {
+                            Receipe receipe = new Receipe();
+
+                            receipe.Id = item.Id;
+                            receipe.Note = item.Note;
+                            receipe.PrepareTime = item.PrepareTime;
+                            receipe.Title = item.Title;
+                            item.Descrip = item.Descrip.Replace("\\n\r\n", "\n\r");
+
+                            ReceipeList.Add(item);
+                        }
+
+                        break;
+                    }
+            }
         }
     }
 }

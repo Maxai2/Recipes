@@ -33,13 +33,16 @@
 				<RowDefinition/>
 			</Grid.RowDefinitions>
 
-			<StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+			<StackPanel Margin="5" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
 				<Label Content="Сортировка:"/>
-				<ComboBox Width="150" SelectedItem="{Binding SearchProp}">
-					<ComboBoxItem Content="По алфавиту"/>
-					<ComboBoxItem Content="Против алфавита"/>
-					<ComboBoxItem Content="По времени"/>
-					<ComboBoxItem Content="Против времени"/>
+				<ComboBox Width="150" ItemsSource="{Binding OrderList}" SelectedItem="{Binding SelOrder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+					
 				</ComboBox>
 			</StackPanel>
 			
@@ -79,7 +82,7 @@
 				</Style>
 			</Grid.Style>
 
-			<Label Grid.Row="0" Content="{Binding SelectedReceipe.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" FontSize="20"/>
+			<Label Grid.Row="0" Content="{Binding SelectedReceipe.Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" FontSize="20"/>
 
 			<Grid Margin="10 0" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
 				<Grid.ColumnDefinitions>

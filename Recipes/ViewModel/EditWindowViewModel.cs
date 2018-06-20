@@ -113,6 +113,7 @@ namespace Recipes.ViewModel
         public ObservableCollection<string> IngredientList { get; set; }
 
         public ObservableCollection<string> UnitList { get; set; }
+
         //------------------------------------------------------------------------------
         private ICommand updateIngCom;
         public ICommand UpdateIngCom

@@ -1,5 +1,6 @@
 ﻿using Recipes.Model;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Recipes.Interface
@@ -18,7 +19,9 @@ namespace Recipes.Interface
 
         Receipe SelectedReceipe { get; set; }
 
-        //string SearchProp { get; set; }
+        ObservableCollection<string> OrderList { get; set; }
+
+        string SelOrder { get; set; }
 
         IMainWindow View { get; }
     }
