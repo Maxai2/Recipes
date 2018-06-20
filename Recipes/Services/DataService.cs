@@ -108,5 +108,12 @@ namespace Recipes.Services
         {
             return unitDapper.GetUnitIdByName(unitName);
         }
+
+        //----------------------------------------------------------------------
+
+        public void UpdateReceipe(Receipe receipe)
+        {
+            recipeDapper.UpdateReceipe(receipe);
+        }
     }
 }

@@ -137,7 +137,7 @@
 							<ComboBox Name="CBingList" Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}" FontSize="12" SelectedItem="{Binding SelectedIngForAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
-										<Label Content="{Binding}"/>
+										<TextBlock Text="{Binding}"/>
 									</DataTemplate>
 								</ComboBox.ItemTemplate>
 							</ComboBox>

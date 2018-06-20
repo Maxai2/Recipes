@@ -70,19 +70,9 @@ namespace Recipes.Repository
 
         //------------------------------------------------------------
 
-        public Receipe GetReceipeById(int id)
+        public void UpdateReceipe(Receipe receipe)
         {
-            return Connection.Get<Receipe>(new Receipe { Id = id });
+            Connection.Query("UPDATE Receipes SET Descrip = @Descrip, Note = @Note, PrepareTime = @PrepareTime, Title = @Title WHERE Id = @Id", new { Descrip = receipe.Descrip, Note = receipe.Note, PrepareTime = receipe.PrepareTime, Title = receipe.Title, Id = receipe.Id });
         }
-
-        //------------------------------------------------------------
-
-        public void UpdateReceipe(int id)
-        {
-            Connection.Update<Receipe>(new Receipe { Id = id });
-        }
-
-        //------------------------------------------------------------
-
     }
 }

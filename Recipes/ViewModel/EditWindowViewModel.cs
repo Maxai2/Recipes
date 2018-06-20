@@ -129,6 +129,8 @@ namespace Recipes.ViewModel
 
                             RecIngList.RemoveAt(deleteId);
 
+                            base.OnPropertyChanged();
+
                             ReceipeIngridient temp = new ReceipeIngridient()
                             {
                                 Ingredient = SelectedIngForUpdate,
@@ -357,16 +359,7 @@ namespace Recipes.ViewModel
                     updateReceipeCom = new RelayCommand(
                         (param) =>
                         {
-                            Receipe receipe = new Receipe()
-                            {
-                                Descrip = Receipe.Descrip,
-                                Id = Receipe.Id,
-                                Note = Receipe.Note,
-                                Title = Receipe.Title,
-                                PrepareTime = Receipe.PrepareTime
-                            };
-
-                            ds.InsertReceipe(receipe);
+                            ds.UpdateReceipe(Receipe);
 
                             ds.DeleteRecIng(Receipe.Id);
 
@@ -375,7 +368,7 @@ namespace Recipes.ViewModel
                                 ds.InsertRecIng(item.IngredientId, Receipe.Id, item.Quantity);
                             }
 
-                            MessageBox("Рецепт добавлен!", "");
+                            MessageBox("Рецепт обновлен!", "");
 
                             Close();
                         },
