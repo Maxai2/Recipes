@@ -115,5 +115,12 @@ namespace Recipes.Services
         {
             recipeDapper.UpdateReceipe(receipe);
         }
+
+        //----------------------------------------------------------------------
+
+        public int GetIngredientIdByName(string IngName)
+        {
+            return ingDapper.GetIngredientIdByName(IngName);
+        }
     }
 }

@@ -114,17 +114,6 @@ namespace Recipes.ViewModel
 
         public ObservableCollection<string> UnitList { get; set; }
 
-        private int selectedIngIndex;
-        public int SelectedIngIndex
-        {
-            get => selectedIngIndex;
-            set
-            {
-                selectedIngIndex = value;
-                base.OnPropertyChanged();
-            }
-        }
-
         //------------------------------------------------------------------------------
         private ICommand updateIngCom;
         public ICommand UpdateIngCom
@@ -136,13 +125,14 @@ namespace Recipes.ViewModel
                     updateIngCom = new RelayCommand(
                         (param) =>
                         {
-                            RecIngList.RemoveAt(SelectedIngIndex);
+                            RecIngList.RemoveAt(SelectedIngredientListIndex);
 
                             ReceipeIngridient temp = new ReceipeIngridient()
                             {
                                 Ingredient = SelectedIngForUpdate,
                                 Quantity = Convert.ToSingle(ExcIngQuantityForUpdate),
-                                Unit = ExcSelectedUnitForUpdate
+                                Unit = ExcSelectedUnitForUpdate,
+                                IngredientId = ds.GetIngredientIdByName(SelectedIngForUpdate)
                             };
 
                             RecIngList.Add(temp);
@@ -150,11 +140,21 @@ namespace Recipes.ViewModel
                             SelectedIngForUpdate = null;
                             ExcIngQuantityForUpdate = "";
                             ExcSelectedUnitForUpdate = null;
+                        },
+                        (param) =>
+                        {
+                            if (SelectedIngredientListIndex == -1)
+                            {
+                                return false;
+                            }
+
+                            return true;
                         });
                 }
                 return updateIngCom;
             }
         }
+
         //------------------------------------------------------------------------------
 
         private int selectedIngredientListIndex;
@@ -234,7 +234,9 @@ namespace Recipes.ViewModel
                 base.OnPropertyChanged();
             }
         }
+
         //------------------------------------------------------------------------------
+
         public ICommand addIngridientCom;
         public ICommand AddIngridientCom
         {
@@ -259,7 +261,8 @@ namespace Recipes.ViewModel
                                 {
                                     Ingredient = SelectedIngForAdd,
                                     Quantity = Convert.ToSingle(ExcIngQuantityForAdd),
-                                    Unit = ExcSelectedUnitForAdd
+                                    Unit = ExcSelectedUnitForAdd,
+                                    IngredientId = ds.GetIngredientIdByName(SelectedIngForAdd)
                                 });
 
                                 SelectedIngForAdd = null;
@@ -295,7 +298,8 @@ namespace Recipes.ViewModel
                                 {
                                     Ingredient = NewIngName,
                                     Quantity = Convert.ToSingle(NewIngQuantity),
-                                    Unit = NewSelectedUnit
+                                    Unit = NewSelectedUnit,
+                                    IngredientId = ds.GetIngredientIdByName(NewIngName)
                                 });
 
                                 NewIngName = "";

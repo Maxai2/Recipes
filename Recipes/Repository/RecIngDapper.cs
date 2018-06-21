@@ -56,7 +56,7 @@ namespace Recipes.Repository
 
         public void InsertRecIng(int ingredientId, int receipeId, float quantity)
         {
-            resetIdentity("ReceipesIngredients", GetLastId());
+            //resetIdentity("ReceipesIngredients", GetLastId());
 
             Connection.Query("INSERT INTO ReceipesIngredients(IngredientId, ReceipeId, Quantity) VALUES(@IngredientId, @ReceipeId, @Quantity)", new { IngredientId = ingredientId, ReceipeId = receipeId, Quantity = quantity });
         }

@@ -63,28 +63,9 @@ namespace Recipes.Repository
 
         //------------------------------------------------------------
 
-        //public Receipe GetReceipeById(int id)
-        //{
-        //    return Connection.Get<Receipe>(new Receipe { Id = id });
-        //}
-
-        ////------------------------------------------------------------
-
-        //public void DeleteReceipe(int id)
-        //{
-        //    Connection.Delete<Receipe>(new Receipe { Id = id });
-        //}
-
-        ////------------------------------------------------------------
-
-        //public void UpdateReceipe(int id)
-        //{
-        //    Connection.Update<Receipe>(new Receipe { Id = id });
-        //}
-
-
-
-        ////------------------------------------------------------------
-
+        public int GetIngredientIdByName(string IngName)
+        {
+            return Connection.Query<int>("SELECT Id FROM Ingredients WHERE Ingredient = @Ingredient", new { Ingredient = IngName }).Single();
+        }
     }
 }

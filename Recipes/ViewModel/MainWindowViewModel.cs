@@ -164,6 +164,13 @@ namespace Recipes.ViewModel
                         {
                             var editVm = App.Container.Resolve<IEditWindowViewModel>();
                             editVm.View.ShowDialog();
+
+                            ReceipeIngridientListAll.Clear();
+
+                            foreach (var item in ds.GetRecIng())
+                            {
+                                ReceipeIngridientListAll.Add(item);
+                            }
                         });
                 }
 
