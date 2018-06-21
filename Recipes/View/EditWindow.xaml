@@ -75,7 +75,7 @@
 								<ColumnDefinition Width="0.4*"/>
 							</Grid.ColumnDefinitions>
 
-							<ComboBox Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}" FontSize="12" SelectedItem="{Binding SelectedIngForUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30">
+							<ComboBox Grid.Column="0" Margin="10 0" ItemsSource="{Binding IngredientList}" FontSize="12" SelectedItem="{Binding SelectedIngForUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedIngIndex}" Height="30">
 								<ComboBox.ItemTemplate>
 									<DataTemplate>
 										<Label Content="{Binding }"/>

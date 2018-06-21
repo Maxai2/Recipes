@@ -114,6 +114,17 @@ namespace Recipes.ViewModel
 
         public ObservableCollection<string> UnitList { get; set; }
 
+        private int selectedIngIndex;
+        public int SelectedIngIndex
+        {
+            get => selectedIngIndex;
+            set
+            {
+                selectedIngIndex = value;
+                base.OnPropertyChanged();
+            }
+        }
+
         //------------------------------------------------------------------------------
         private ICommand updateIngCom;
         public ICommand UpdateIngCom
@@ -125,11 +136,7 @@ namespace Recipes.ViewModel
                     updateIngCom = new RelayCommand(
                         (param) =>
                         {
-                            var deleteId = RecIngList.FirstOrDefault(f => f.IngredientId == SelectedIngredientListItem.IngredientId).IngredientId;
-
-                            RecIngList.RemoveAt(deleteId);
-
-                            base.OnPropertyChanged();
+                            RecIngList.RemoveAt(SelectedIngIndex);
 
                             ReceipeIngridient temp = new ReceipeIngridient()
                             {

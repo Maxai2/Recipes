@@ -19,6 +19,8 @@ namespace Recipes.Interface
 
         ReceipeIngridient SelectedIngredientListItem { get; set; }
 
+        int SelectedIngIndex { get; set; }
+
         string SelectedIngForUpdate { get; set; }
 
         ObservableCollection<string> IngredientList { get; set; }
