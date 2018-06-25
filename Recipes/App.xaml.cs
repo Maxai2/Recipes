@@ -20,12 +20,12 @@ namespace Recipes
             #region View
             builder.RegisterType<MainWindow>().As<IMainWindow>().SingleInstance();
             builder.RegisterType<AddWindow>().As<IAddWindow>().SingleInstance();
-            builder.RegisterType<EditWindow>().As<IEditWindow>().SingleInstance();
+            builder.RegisterType<EditWindow>().As<IEditWindow>();
             #endregion
             #region ViewModel
             builder.RegisterType<MainWindowViewModel>().As<IMainWindowViewModel>().SingleInstance();
             builder.RegisterType<AddWindowViewModel>().As<IAddWindowViewModel>().SingleInstance();
-            builder.RegisterType<EditWindowViewModel>().As<IEditWindowViewModel>().SingleInstance();
+            builder.RegisterType<EditWindowViewModel>().As<IEditWindowViewModel>();
             #endregion
 
             Container = builder.Build();
